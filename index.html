@@ -181,7 +181,14 @@ async function showAccount(){
     alert('فشل تسجيل الدخول: ' + error.message);
     return;
   }
-async function showAdmin(){
+
+  document.getElementById('loginBtn').style.display = 'none';
+document.getElementById('accountBtn').style.display = 'inline-block';
+
+alert('تم تسجيل الدخول بنجاح!');
+closeModal();
+    }
+    async function showAdmin(){
   const { data } = await supabaseClient.auth.getSession();
   const session = data.session;
 
@@ -233,13 +240,7 @@ async function showAdmin(){
   `;
 
   document.getElementById('closeAdminBtn').onclick = () => page.remove();
-    }
-  document.getElementById('loginBtn').style.display = 'none';
-document.getElementById('accountBtn').style.display = 'inline-block';
-
-alert('تم تسجيل الدخول بنجاح!');
-closeModal();
-    }
+      }
 function choosePlan(plan){
   openModal('plan');
   document.getElementById('modalDesc').textContent =
