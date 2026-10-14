@@ -139,14 +139,30 @@ async function showAccount(){
   page.appendChild(card);
     }
     async function updateAuthButtons(){
-  const { data } = await supabaseClient.auth.getSession();
-  const loggedIn = !!data.session;
+    const { data } = await supabaseClient.auth.getSession();
+  const session = data.session;
+  const loggedIn = !!session;
 
   document.getElementById('loginBtn').style.display =
     loggedIn ? 'none' : 'inline-block';
 
   document.getElementById('accountBtn').style.display =
     loggedIn ? 'inline-block' : 'none';
+
+  const adminBtn = document.getElementById('adminBtn');
+  if (adminBtn) adminBtn.style.display = 'none';
+
+  if (session && adminBtn) {
+    const { data: adminRecord, error } = await supabaseClient
+      .from('admin_users')
+      .select('user_id')
+      .eq('user_id', session.user.id)
+      .maybeSingle();
+
+    if (!error && adminRecord) {
+      adminBtn.style.display = 'inline-block';
+    }
+  }
     }
     updateAuthButtons();
     async function showLogin(){
@@ -165,7 +181,59 @@ async function showAccount(){
     alert('فشل تسجيل الدخول: ' + error.message);
     return;
   }
+async function showAdmin(){
+  const { data } = await supabaseClient.auth.getSession();
+  const session = data.session;
 
+  if (!session) {
+    alert('سجّل الدخول أولًا.');
+    return;
+  }
+
+  const { data: adminRecord, error } = await supabaseClient
+    .from('admin_users')
+    .select('user_id')
+    .eq('user_id', session.user.id)
+    .maybeSingle();
+
+  if (error || !adminRecord) {
+    alert('ليس لديك صلاحية دخول لوحة المدير.');
+    return;
+  }
+
+  let page = document.getElementById('adminPage');
+
+  if (!page) {
+    page = document.createElement('div');
+    page.id = 'adminPage';
+    page.style.cssText = `
+      position:fixed;
+      inset:0;
+      z-index:10000;
+      background:#f3f6fb;
+      overflow-y:auto;
+      padding:25px 15px;
+      direction:rtl;
+      font-family:Tahoma,Arial,sans-serif;
+    `;
+    document.body.appendChild(page);
+  }
+
+  page.innerHTML = `
+    <div style="max-width:700px;margin:20px auto;background:white;padding:25px;border-radius:18px;box-shadow:0 5px 25px #00000010">
+      <h2 style="color:#10233f">لوحة المدير | فيما</h2>
+      <p>تم التحقق من صلاحيات المدير بنجاح.</p>
+      <hr>
+      <h3>إدارة المنصة</h3>
+      <p>هنا سنضيف أدوات إدارة الطلاب والدروس ومحتوى المنصة.</p>
+      <button id="closeAdminBtn" style="margin-top:15px;padding:12px 18px;border:0;border-radius:8px;background:#2563eb;color:white;cursor:pointer">
+        العودة إلى الصفحة الرئيسية
+      </button>
+    </div>
+  `;
+
+  document.getElementById('closeAdminBtn').onclick = () => page.remove();
+    }
   document.getElementById('loginBtn').style.display = 'none';
 document.getElementById('accountBtn').style.display = 'inline-block';
 
