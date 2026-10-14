@@ -72,10 +72,70 @@ async function showAccount(){
   const user = data.user;
   const name = user.user_metadata?.full_name || 'طالب فيما';
 
-  alert(
-    'أهلًا بك في حسابك يا ' + name +
-    '\nالبريد الإلكتروني: ' + user.email
-  );
+  let page = document.getElementById('accountPage');
+
+  if (!page) {
+    page = document.createElement('div');
+    page.id = 'accountPage';
+
+    page.style.cssText = `
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      background:#f3f6fb;
+      overflow-y:auto;
+      padding:25px 15px;
+      direction:rtl;
+      font-family:Tahoma,Arial,sans-serif;
+    `;
+
+    document.body.appendChild(page);
+  }
+
+  page.innerHTML = '';
+
+  const card = document.createElement('div');
+
+  card.style.cssText = `
+    max-width:650px;
+    margin:20px auto;
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 5px 25px #00000010;
+  `;
+
+  const title = document.createElement('h2');
+  title.textContent = 'حسابي | فيما';
+  title.style.color = '#10233f';
+
+  const welcome = document.createElement('h3');
+  welcome.textContent = 'أهلًا بك يا ' + name;
+
+  const email = document.createElement('p');
+  email.textContent = 'البريد الإلكتروني: ' + user.email;
+  email.style.color = '#526078';
+
+  const info = document.createElement('p');
+  info.textContent = 'مرحبًا بك في رحلتك لتعلم اللغة الإنجليزية.';
+  info.style.lineHeight = '1.8';
+
+  const close = document.createElement('button');
+  close.textContent = 'العودة إلى الصفحة الرئيسية';
+  close.className = 'btn';
+  close.style.cssText = `
+    margin-top:15px;
+    padding:12px 18px;
+    border:0;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    cursor:pointer;
+  `;
+  close.onclick = () => page.remove();
+
+  card.append(title, welcome, email, info, close);
+  page.appendChild(card);
     }
     async function updateAuthButtons(){
   const { data } = await supabaseClient.auth.getSession();
