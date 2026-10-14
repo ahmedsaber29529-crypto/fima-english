@@ -1,340 +1,161 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>فيما | الإنجليزي ببساطة</title>
-<meta name="description" content="فيما — اتعلم الإنجليزي خطوة بخطوة، من أول كلمة لحد ما تتكلم بثقة.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="فيما FIMA English — اتعلم الإنجليزية خطوة بخطوة من البداية وحتى المحادثة.">
+<title>فيما | FIMA English</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--navy:#10233f;--blue:#2563eb;--mint:#20c997;--cream:#f7f9fc;--ink:#17243b;--muted:#68758a;--line:#e4eaf2}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Tahoma,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.8}a{text-decoration:none;color:inherit}.wrap{width:min(1120px,92%);margin:auto}
-header{position:sticky;top:0;background:#ffffffed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:5}.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:900;color:var(--navy)}.logo{width:43px;height:43px;border-radius:15px;background:linear-gradient(135deg,var(--blue),#7c3aed);color:white;display:grid;place-items:center;font-size:24px}.links{display:flex;gap:25px;color:#46546a;font-size:14px}.btn{border:0;border-radius:13px;padding:12px 20px;background:var(--blue);color:white;font-weight:700;cursor:pointer;display:inline-block}.btn.secondary{background:#eaf1ff;color:var(--blue)}.hero{background:radial-gradient(circle at 10% 10%,#dffbf3 0,transparent 28%),linear-gradient(135deg,#f6f9ff,#fff 60%);padding:76px 0 65px}.heroGrid{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center}.tag{display:inline-flex;background:#e6fbf4;color:#087f5b;padding:6px 13px;border-radius:99px;font-weight:700;font-size:13px}h1{font-size:clamp(36px,5vw,58px);line-height:1.3;margin:18px 0;color:var(--navy)}h1 span{color:var(--blue)}.lead{font-size:18px;color:var(--muted);max-width:620px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin:27px 0}.mini{display:flex;gap:20px;color:#637087;font-size:13px;flex-wrap:wrap}.visual{background:white;border:1px solid var(--line);border-radius:28px;padding:25px;box-shadow:0 25px 70px #10233f12;transform:rotate(-1deg)}.visualTop{display:flex;justify-content:space-between;align-items:center}.pill{background:#f0f5ff;color:#3158a5;border-radius:9px;padding:5px 10px;font-size:12px}.progress{height:9px;background:#edf1f7;border-radius:20px;overflow:hidden;margin:10px 0 18px}.progress i{display:block;height:100%;width:68%;background:linear-gradient(90deg,var(--blue),var(--mint));border-radius:20px}.lesson{padding:14px;background:#f8fafc;border:1px solid var(--line);border-radius:15px;margin:10px 0;display:flex;justify-content:space-between;align-items:center}.lesson small{display:block;color:var(--muted)}.check{color:#0b9f75;font-weight:bold}.section{padding:75px 0}.section.soft{background:var(--cream)}.heading{text-align:center;max-width:700px;margin:0 auto 38px}.heading h2{font-size:34px;color:var(--navy);margin:0 0 10px}.heading p{color:var(--muted);margin:0}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{border:1px solid var(--line);border-radius:20px;padding:24px;background:#fff}.icon{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;background:#eaf1ff;font-size:24px}.card h3{margin:15px 0 7px;color:var(--navy)}.card p{color:var(--muted);font-size:14px;margin:0}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.step{padding:20px;border-radius:17px;background:white;border:1px solid var(--line)}.num{font-size:13px;color:var(--blue);font-weight:bold}.priceGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}.price{border:1px solid var(--line);border-radius:22px;padding:26px;background:#fff;position:relative}.price.featured{border:2px solid var(--blue);box-shadow:0 18px 45px #2563eb15}.popular{position:absolute;top:-14px;right:22px;background:var(--blue);color:#fff;padding:3px 12px;border-radius:99px;font-size:12px}.amount{font-size:34px;font-weight:900;color:var(--navy);margin:12px 0}.amount small{font-size:13px;color:var(--muted);font-weight:400}.price ul{padding-right:20px;color:#526077;font-size:14px;min-height:125px}.price li{margin:6px 0}.price .btn{width:100%;text-align:center}.note{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}.faq{max-width:800px;margin:auto}.faq details{border-bottom:1px solid var(--line);padding:17px 5px}.faq summary{cursor:pointer;font-weight:700;color:var(--navy)}.faq p{color:var(--muted);font-size:14px}footer{background:var(--navy);color:#dbe5f4;padding:38px 0}.foot{display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap}.foot strong{font-size:22px;color:#fff}.foot small{color:#b5c3d8}.modal{display:none;position:fixed;inset:0;background:#0b1934aa;z-index:20;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modalBox{background:#fff;border-radius:22px;padding:26px;width:min(440px,100%);position:relative}.close{position:absolute;left:18px;top:12px;border:0;background:none;font-size:25px;cursor:pointer}.modalBox h2{margin-top:0;color:var(--navy)}label{display:block;font-size:13px;font-weight:bold;margin:12px 0 5px}input,select{width:100%;padding:12px;border:1px solid #dbe3ef;border-radius:11px;font:inherit}form .btn{width:100%;margin-top:16px}.toast{display:none;background:#e6fbf4;color:#087f5b;padding:10px;border-radius:10px;font-size:13px;margin-top:12px}
-@media(max-width:800px){.links{display:none}.heroGrid{grid-template-columns:1fr}.visual{transform:none}.cards,.priceGrid{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.hero{padding-top:45px}.section{padding:55px 0}}
-@media(max-width:440px){.steps{grid-template-columns:1fr}.nav .btn{padding:10px 12px}.brand{font-size:21px}}
+:root{--navy:#10233f;--blue:#2563eb;--mint:#d8f7ee;--bg:#f4f7fb;--ink:#17243a;--muted:#64748b;--line:#e2e8f0;--white:#fff;--red:#b91c1c}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif;line-height:1.7}button,input,select{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:11px 16px;font-weight:700}.primary{background:var(--blue);color:white}.secondary{background:#eaf0ff;color:#1d4ed8}.plain{background:#eef2f7;color:var(--navy)}.danger{background:#fee2e2;color:var(--red)}.wrap{width:min(1100px,92%);margin:auto}.top{background:white;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0}.brand{font-size:23px;font-weight:900;color:var(--navy);text-decoration:none;display:flex;align-items:center;gap:9px}.logo{display:inline-grid;place-items:center;background:var(--blue);color:white;width:38px;height:38px;border-radius:12px}.nav-actions{display:flex;gap:8px;flex-wrap:wrap}.hero{padding:56px 0 38px;background:linear-gradient(135deg,#eef5ff,#e7fbf4)}.hero-grid{display:grid;grid-template-columns:1.4fr .8fr;gap:25px;align-items:center}.eyebrow{display:inline-block;background:white;color:#1d4ed8;padding:5px 12px;border-radius:99px;font-size:13px;font-weight:bold}.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.3;margin:14px 0}.hero p{font-size:18px;color:#475569;max-width:650px}.hero-card,.card,.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 8px 25px #10233f08}.hero-card .big{font-size:42px}.section{padding:35px 0}.section h2{margin:0 0 8px;color:var(--navy)}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}.feature-icon{font-size:28px}.lesson-list{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}.lesson{background:white;border:1px solid var(--line);border-radius:15px;padding:18px}.lesson h3{margin:7px 0}.tag{font-size:12px;background:#edf5ff;color:#1d4ed8;padding:4px 9px;border-radius:99px;display:inline-block}.lesson .row{display:flex;justify-content:space-between;align-items:center;gap:10px}.progress-track{height:9px;background:#e2e8f0;border-radius:99px;overflow:hidden}.progress-fill{height:100%;background:#10b981;width:0}.footer{padding:25px 0;background:var(--navy);color:#dbeafe;margin-top:35px}.hidden{display:none!important}.overlay{position:fixed;inset:0;background:#0f172acc;z-index:100;display:grid;place-items:center;padding:15px;overflow:auto}.modal{background:white;border-radius:18px;padding:23px;width:min(440px,100%);max-height:95vh;overflow:auto}.modal h2{margin-top:0}.field{display:block;width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;margin:7px 0 14px;background:white}.label{font-size:14px;font-weight:bold}.modal-actions{display:flex;gap:8px;flex-wrap:wrap}.notice{padding:12px;border-radius:10px;background:#eff6ff;color:#1e40af;margin:12px 0}.error{background:#fef2f2;color:#991b1b}.success{background:#ecfdf5;color:#065f46}.page{position:fixed;inset:0;z-index:50;background:var(--bg);overflow:auto;padding:20px}.page-inner{max-width:950px;margin:0 auto}.page-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.stat{background:white;border:1px solid var(--line);border-radius:14px;padding:16px}.stat strong{font-size:25px;display:block;color:var(--navy)}.quiz-option{display:block;width:100%;text-align:right;background:#f8fafc;border:1px solid var(--line);margin:8px 0}.quiz-option:hover{background:#eff6ff}.small{font-size:13px}.admin-student{border:1px solid var(--line);padding:13px;border-radius:12px;margin:9px 0;background:#fff}.spinner{opacity:.7}@media(max-width:760px){.hero-grid,.grid,.lesson-list{grid-template-columns:1fr}.hero{padding-top:35px}.nav{align-items:flex-start}.brand{font-size:19px}.nav-actions button{padding:9px 10px;font-size:13px}.stats{grid-template-columns:1fr}.page{padding:12px}}
 </style>
 </head>
 <body>
-<header><div class="wrap nav"><a class="brand" href="#"><span class="logo">ف</span> فيما <span style="font-size:12px;color:#718096;font-weight:500">FIMA English</span></a><nav class="links"><a href="#method">طريقتنا</a><a href="#courses">المسارات</a><a href="#pricing">الاشتراكات</a><a href="#faq">الأسئلة الشائعة</a></nav><button class="btn" onclick="openModal('join')">ابدأ مجانًا</button><button class="btn secondary" id="loginBtn" onclick="showLogin()">تسجيل الدخول</button>
-<button class="btn" id="accountBtn" onclick="showAccount()" style="display:none">حسابي</button></div></header>
-<button class="btn" id="adminBtn" onclick="showAdmin()" style="display:none">لوحة المدير</button>
-  <main>
-<section class="hero"><div class="wrap heroGrid"><div><span class="tag">✨ الإنجليزي مش صعب… محتاج طريقة صح</span><h1>اتعلّم الإنجليزي<br><span>ببساطة، خطوة بخطوة.</span></h1><p class="lead">مع «فيما» هتتعلم على قدّ مستواك، وتتمرّن كل يوم على الكلمات والاستماع والمحادثة — من غير تعقيد ولا ضغط.</p><div class="actions"><button class="btn" onclick="openModal('join')">ابدأ رحلتك مجانًا ←</button><a class="btn secondary" href="#courses">اكتشف المسارات</a></div><div class="mini"><span>✓ دروس قصيرة وواضحة</span><span>✓ تعلّم على موبايلك</span><span>✓ تقدّم تتابعه بنفسك</span></div></div>
-<div class="visual"><div class="visualTop"><div><b>أهلًا بيك في رحلتك 👋</b><div style="color:#718096;font-size:13px">خطة تعلّمك لهذا الأسبوع</div></div><span class="pill">المستوى A1</span></div><hr style="border:0;border-top:1px solid #edf1f7;margin:20px 0"><div style="display:flex;justify-content:space-between"><b>تقدّمك الأسبوعي</b><b style="color:#087f5b">68%</b></div><div class="progress"><i></i></div><div class="lesson"><div>📘 <b>كلمات من الحياة اليومية</b><small>8 دقائق · مفردات</small></div><span class="check">✓</span></div><div class="lesson"><div>🎧 <b>افهم الإنجليزي لما تسمعه</b><small>10 دقائق · استماع</small></div><span>▶</span></div><div class="lesson"><div>💬 <b>عرّف نفسك بثقة</b><small>6 دقائق · محادثة</small></div><span>🔒</span></div><small style="color:#718096">* واجهة توضيحية لشكل المنصة بعد تفعيل نظام الدروس والحسابات.</small></div></div></section>
-<section class="section" id="method"><div class="wrap"><div class="heading"><h2>ليه «فيما»؟</h2><p>بدل ما تتوه بين مصادر كتير، امشِ على طريق واضح ومناسب ليك.</p></div><div class="cards"><article class="card"><div class="icon">🧩</div><h3>شرح بسيط</h3><p>قواعد ومفردات بأمثلة من مواقف الحياة، مع شرح عربي واضح.</p></article><article class="card"><div class="icon">🎧</div><h3>اسمع واتكلم</h3><p>تدريبات استماع ونطق ومحادثات قصيرة تساعدك تستخدم اللغة فعلًا.</p></article><article class="card"><div class="icon">📈</div><h3>تابع تقدّمك</h3><p>خطة تعلّم تدريجية واختبارات قصيرة لمعرفة نقاط القوة وما يحتاج تدريبًا.</p></article></div></div></section>
-<section class="section soft" id="courses"><div class="wrap"><div class="heading"><h2>اختار المسار المناسب ليك</h2><p>ابدأ من مستواك، مش من مستوى غيرك.</p></div><div class="cards"><article class="card"><div class="icon">🌱</div><h3>من الصفر A0–A1</h3><p>الحروف والأصوات، تكوين الجملة، أهم الكلمات والتعريف بنفسك.</p></article><article class="card"><div class="icon">🚀</div><h3>طوّر مستواك A2–B1</h3><p>مواقف يومية، قواعد أساسية، فهم محادثات والتعبير عن رأيك.</p></article><article class="card"><div class="icon">🎯</div><h3>اتكلم بثقة B2+</h3><p>محادثات أطول، مفردات أوسع، إنجليزي الدراسة والعمل والمقابلات.</p></article></div></div></section>
-<section class="section" id="how"><div class="wrap"><div class="heading"><h2>رحلتك مع فيما في 4 خطوات</h2><p>خلي التعلّم عادة صغيرة كل يوم.</p></div><div class="steps"><div class="step"><div class="num">01 / سجّل</div><h3>اعمل حسابك</h3><p>حدد هدفك ومستواك الحالي.</p></div><div class="step"><div class="num">02 / اختبر</div><h3>اعرف مستواك</h3><p>ابدأ باختبار تحديد مستوى قصير.</p></div><div class="step"><div class="num">03 / اتعلّم</div><h3>ذاكر يوميًا</h3><p>درس قصير وتدريب عملي كل يوم.</p></div><div class="step"><div class="num">04 / تقدّم</div><h3>راجع إنجازك</h3><p>اختبر نفسك وكرر اللي محتاجه.</p></div></div></div></section>
-<section class="section soft" id="pricing"><div class="wrap"><div class="heading"><h2>خطط الاشتراك</h2><p>أسعار تجريبية قابلة للتعديل قبل الإطلاق — لا توجد مدفوعات حقيقية في هذه النسخة.</p></div><div class="priceGrid"><article class="price"><h3>البداية</h3><div class="amount">0 <small>جنيه / دائمًا</small></div><p>جرّب أسلوب فيما</p><ul><li>دروس مجانية مختارة</li><li>مفردات يومية</li><li>اختبار مستوى مبدئي</li></ul><button class="btn secondary" onclick="openModal('join')">ابدأ مجانًا</button></article><article class="price featured"><span class="popular">الأكثر ترشيحًا</span><h3>فيما بلس</h3><div class="amount">199 <small>جنيه / شهر</small></div><p>للتعلّم المنتظم</p><ul><li>كل الدروس والمسارات</li><li>اختبارات ومراجعات</li><li>ملفات تدريب قابلة للطباعة</li><li>متابعة تقدّمك</li></ul><button class="btn" onclick="choosePlan('فيما بلس - 199 جنيه شهريًا')">اختار فيما بلس</button></article><article class="price"><h3>الخطة السنوية</h3><div class="amount">1,490 <small>جنيه / سنة</small></div><p>وفّر مع الاشتراك السنوي</p><ul><li>كل مميزات فيما بلس</li><li>وصول لمدة 12 شهرًا</li><li>مراجعات شهرية</li></ul><button class="btn secondary" onclick="choosePlan('الخطة السنوية - 1490 جنيه')">اختار السنوي</button></article></div><p class="note">مهم: الأسعار مجرد اقتراح تسويقي. قبل تحصيل أي أموال، أضف بوابة دفع حقيقية، وسياسة استرجاع وخصوصية وشروط استخدام واضحة.</p></div></section>
-<section class="section" id="faq"><div class="wrap"><div class="heading"><h2>أسئلة بتتكرر</h2><p>إجابات سريعة قبل ما تبدأ.</p></div><div class="faq"><details><summary>هل أقدر أبدأ من الصفر؟</summary><p>أيوه، المسار المبتدئ مصمم لتعلّم الأساسيات بالتدريج. محتوى الدروس الفعلي لازم يتضاف قبل الإطلاق.</p></details><details><summary>هل الاشتراك والدفع شغالين دلوقتي؟</summary><p>لا. دي نسخة تصميم أولية؛ التسجيل تجريبي فقط ولا تحفظ بيانات ولا تخصم أموالًا. يلزم ربط قاعدة بيانات ونظام عضويات وبوابة دفع.</p></details><details><summary>إزاي أضيف دروس وأعضاء؟</summary><p>بعد اختيار منصة الاستضافة ونظام إدارة التعلّم، ستتمكن من إضافة الدروس والأعضاء وإدارة الاشتراكات من لوحة تحكم المالك.</p></details><details><summary>هل أقدر أغيّر الأسعار والاسم؟</summary><p>أيوه، النصوص والأسعار الحالية قابلة للتعديل قبل النشر.</p></details></div></div></section>
-<section class="section soft"><div class="wrap" style="text-align:center"><h2 style="font-size:32px;color:var(--navy)">ابدأ صغير… واتقدّم كل يوم.</h2><p style="color:var(--muted)">فيما — الإنجليزي أقرب مما تتخيّل.</p><button class="btn" onclick="openModal('join')">انضم لقائمة المهتمين</button></div></section>
+<header class="top">
+ <div class="wrap nav">
+  <a href="#" class="brand"><span class="logo">ف</span> فيما <span style="font-size:12px;color:#718096;font-weight:500">FIMA English</span></a>
+  <div class="nav-actions">
+   <button class="plain" onclick="scrollToLessons()">الدروس</button>
+   <button class="secondary" id="loginBtn" onclick="openAuth('login')">تسجيل الدخول</button>
+   <button class="primary" id="signupBtn" onclick="openAuth('signup')">إنشاء حساب</button>
+   <button class="secondary hidden" id="accountBtn" onclick="showAccount()">حسابي</button>
+   <button class="primary hidden" id="adminBtn" onclick="showAdmin()">لوحة المدير</button>
+   <button class="plain hidden" id="logoutBtn" onclick="logout()">خروج</button>
+  </div>
+ </div>
+</header>
+<main>
+<section class="hero"><div class="wrap hero-grid">
+ <div><span class="eyebrow">ابدأ رحلتك اليوم</span><h1>اتعلّم الإنجليزي<br>ببساطة، خطوة بخطوة.</h1><p>دروس قصيرة واختبارات تساعدك تبني أساس قوي في اللغة الإنجليزية، وتتابع تقدّمك من مكان واحد.</p>
+ <div class="nav-actions"><button class="primary" onclick="scrollToLessons()">ابدأ التعلّم مجانًا</button><button class="secondary" onclick="openAuth('signup')">أنشئ حسابك</button></div>
+ <p class="small muted">المحتوى الحالي نسخة أولية قابلة للتوسيع وإضافة دروس جديدة.</p></div>
+ <div class="hero-card"><div class="big">📘</div><h2>خطوة صغيرة كل يوم</h2><p class="muted">اتعلّم كلمات وجمل أساسية، واختبر فهمك، واحتفظ بتقدّمك عند تسجيل الدخول.</p><div class="progress-track"><div class="progress-fill" style="width:35%"></div></div><p class="small">ابدأ من الدرس الأول ولا تستعجل.</p></div>
+</div></section>
+<section class="section"><div class="wrap"><h2>ليه تتعلّم مع فيما؟</h2><p class="muted">تجربة بسيطة وواضحة تناسب المبتدئين.</p><div class="grid">
+ <div class="card"><div class="feature-icon">🧩</div><h3>دروس مرتبة</h3><p class="muted">ابدأ بالأساسيات وتقدّم بالتدريج.</p></div>
+ <div class="card"><div class="feature-icon">✅</div><h3>اختبارات قصيرة</h3><p class="muted">راجع فهمك بعد كل درس.</p></div>
+ <div class="card"><div class="feature-icon">📈</div><h3>متابعة التقدّم</h3><p class="muted">احفظ الدروس التي أكملتها وشاهد مستواك.</p></div>
+</div></div></section>
+<section class="section" id="lessons"><div class="wrap"><h2>الدروس المتاحة</h2><p class="muted">اختار درسًا وابدأ. يمكنك تجربة المحتوى، وتسجيل الدخول لحفظ تقدّمك على حسابك.</p><div id="lessonList" class="lesson-list"></div></div></section>
 </main>
-<footer><div class="wrap foot"><div><strong>فيما | FIMA English</strong><br><small>الإنجليزي ببساطة، خطوة بخطوة.</small></div><div><b>روابط</b><br><a href="#courses">المسارات</a> · <a href="#pricing">الاشتراكات</a> · <a href="#faq">الأسئلة الشائعة</a></div><div><small>© 2026 فيما. كل الحقوق محفوظة.<br>أضف بيانات التواصل والسياسات قبل الإطلاق.</small></div></div></footer>
-<div class="modal" id="modal"><div class="modalBox"><button class="close" onclick="closeModal()">×</button><h2 id="modalTitle">انضم إلى فيما</h2><p id="modalDesc" style="color:#68758a;font-size:14px">سجّل اهتمامك لتجربة المنصة.</p><form id="joinForm"><label for="name">الاسم</label><input id="name" required placeholder="اكتب اسمك"><label for="email">البريد الإلكتروني</label><input id="email" type="email" required placeholder="name@example.com"> <label for="password">كلمة المرور</label>
-<input id="password" type="password" required minlength="8" autocomplete="new-password" placeholder="8 أحرف على الأقل"><label for="level">مستواك الحالي</label><select id="level"><option>لسه هبدأ من الصفر</option><option>مبتدئ</option><option>متوسط</option><option>متقدم</option></select><button class="btn" type="submit">تأكيد تجريبي</button><div class="toast" id="toast">تم التحقق من النموذج في هذه النسخة التجريبية فقط. لم تُرسل بياناتك أو تُحفظ.</div></form></div></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
- const SUPABASE_URL = 'https://zsxczhagznoevjayxjma.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_f1_pd3WLrjYXMlnBsSA_6g_V7cUlYUb';
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-  );
-  supabaseClient.auth.onAuthStateChange((event, session) => {
-  if (event === 'PASSWORD_RECOVERY') {
-    setTimeout(async () => {
-      const newPassword = prompt('اكتب كلمة المرور الجديدة (8 أحرف على الأقل):');
-
-      if (!newPassword || newPassword.length < 8) {
-        alert('كلمة المرور يجب أن تكون 8 أحرف على الأقل.');
-        return;
-      }
-
-      const { error } = await supabaseClient.auth.updateUser({
-        password: newPassword
-      });
-
-      if (error) {
-        alert('تعذر تغيير كلمة المرور: ' + error.message);
-      } else {
-        alert('تم تغيير كلمة المرور بنجاح! يمكنك تسجيل الدخول الآن.');
-      }
-    }, 0);
-  }
-});
-const modal=document.getElementById('modal');
-function openModal(mode){document.getElementById('modalTitle').textContent=mode==='join'?'انضم إلى فيما':'اختيار الاشتراك';document.getElementById('modalDesc').textContent='هذه خطوة تجريبية لتوضيح شكل التسجيل قبل ربط النظام الحقيقي.';document.getElementById('toast').style.display='none';modal.classList.add('show')}
-function closeModal(){modal.classList.remove('show')}
-async function showAccount(){
-  const { data, error } = await supabaseClient.auth.getUser();
-
-  if (error || !data.user) {
-    alert('من فضلك سجّل الدخول أولًا.');
-    return;
-  }
-
-  const user = data.user;
-  const name = user.user_metadata?.full_name || 'طالب فيما';
-
-  let page = document.getElementById('accountPage');
-
-  if (!page) {
-    page = document.createElement('div');
-    page.id = 'accountPage';
-
-    page.style.cssText = `
-      position:fixed;
-      inset:0;
-      z-index:9999;
-      background:#f3f6fb;
-      overflow-y:auto;
-      padding:25px 15px;
-      direction:rtl;
-      font-family:Tahoma,Arial,sans-serif;
-    `;
-
-    document.body.appendChild(page);
-  }
-
-  page.innerHTML = '';
-
-  const card = document.createElement('div');
-
-  card.style.cssText = `
-    max-width:650px;
-    margin:20px auto;
-    background:white;
-    padding:25px;
-    border-radius:18px;
-    box-shadow:0 5px 25px #00000010;
-  `;
-
-  const title = document.createElement('h2');
-  title.textContent = 'حسابي | فيما';
-  title.style.color = '#10233f';
-
-  const welcome = document.createElement('h3');
-  welcome.textContent = 'أهلًا بك يا ' + name;
-
-  const email = document.createElement('p');
-  email.textContent = 'البريد الإلكتروني: ' + user.email;
-  email.style.color = '#526078';
-
-  const info = document.createElement('p');
-  info.textContent = 'مرحبًا بك في رحلتك لتعلم اللغة الإنجليزية.';
-  info.style.lineHeight = '1.8';
-
-  const close = document.createElement('button');
-  close.textContent = 'العودة إلى الصفحة الرئيسية';
-  close.className = 'btn';
-  close.style.cssText = `
-    margin-top:15px;
-    padding:12px 18px;
-    border:0;
-    border-radius:8px;
-    background:#2563eb;
-    color:white;
-    cursor:pointer;
-  `;
-  close.onclick = () => page.remove();
-
-  card.append(title, welcome, email, info, close);
-  page.appendChild(card);
-    }
-    async function updateAuthButtons(){
-    const { data } = await supabaseClient.auth.getSession();
-  const session = data.session;
-  const loggedIn = !!session;
-
-  document.getElementById('loginBtn').style.display =
-    loggedIn ? 'none' : 'inline-block';
-
-  document.getElementById('accountBtn').style.display =
-    loggedIn ? 'inline-block' : 'none';
-
-  const adminBtn = document.getElementById('adminBtn');
-  if (adminBtn) adminBtn.style.display = 'none';
-
-  if (session && adminBtn) {
-    const { data: adminRecord, error } = await supabaseClient
-      .from('admin_users')
-      .select('user_id')
-      .eq('user_id', session.user.id)
-      .maybeSingle();
-    alert('نتيجة فحص المدير: ' + JSON.stringify({ adminRecord, error }));
- if (!error && adminRecord) {
-      adminBtn.style.display = 'inline-block';
-    }
-  }
-    }
-    updateAuthButtons();
-    async function showLogin(){
-  const email = prompt('اكتب بريدك الإلكتروني:');
-  if (!email) return;
-
-  const password = prompt('اكتب كلمة المرور:');
-  if (!password) return;
-
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
-    email: email.trim(),
-    password: password
-  });
-
-  if (error) {
-    alert('فشل تسجيل الدخول: ' + error.message);
-    return;
-  }
-
-  document.getElementById('loginBtn').style.display = 'none';
-document.getElementById('accountBtn').style.display = 'inline-block';
-
-alert('تم تسجيل الدخول بنجاح!');
-closeModal();
-    }
-    async function showAdmin(){
-  const { data } = await supabaseClient.auth.getSession();
-  const session = data.session;
-
-  if (!session) {
-    alert('سجّل الدخول أولًا.');
-    return;
-  }
-
-  const { data: adminRecord, error } = await supabaseClient
-    .from('admin_users')
-    .select('user_id')
-    .eq('user_id', session.user.id)
-    .maybeSingle();
-
-  if (error || !adminRecord) {
-    alert('ليس لديك صلاحية دخول لوحة المدير.');
-    return;
-  }
-
-  let page = document.getElementById('adminPage');
-
-  if (!page) {
-    page = document.createElement('div');
-    page.id = 'adminPage';
-    page.style.cssText = `
-      position:fixed;
-      inset:0;
-      z-index:10000;
-      background:#f3f6fb;
-      overflow-y:auto;
-      padding:25px 15px;
-      direction:rtl;
-      font-family:Tahoma,Arial,sans-serif;
-    `;
-    document.body.appendChild(page);
-  }
-
-  page.innerHTML = `
-    <div style="max-width:700px;margin:20px auto;background:white;padding:25px;border-radius:18px;box-shadow:0 5px 25px #00000010">
-      <h2 style="color:#10233f">لوحة المدير | فيما</h2>
-      <p>تم التحقق من صلاحيات المدير بنجاح.</p>
-      <hr>
-      <h3>إدارة المنصة</h3>
-      <div style="margin-top:20px;padding:20px;border:1px solid #e2e8f0;border-radius:12px">
-  <h3>إدارة الطلاب</h3>
-  <p>عرض حسابات الطلاب المسجلين في منصة فيما.</p>
-  <input
-  id="studentSearch"
-  type="search"
-  placeholder="ابحث باسم الطالب أو البريد الإلكتروني..."
-  style="width:100%;padding:12px;margin:12px 0;border:1px solid #cbd5e1;border-radius:8px;box-sizing:border-box"
->
-  <button id="loadStudentsBtn" style="padding:12px 18px;border:0;border-radius:8px;background:#2563eb;color:white;cursor:pointer">
-    عرض الطلاب
-  </button>
-  <div id="studentsList" style="margin-top:20px"></div>
-</div>
-      <button id="closeAdminBtn" style="margin-top:15px;padding:12px 18px;border:0;border-radius:8px;background:#2563eb;color:white;cursor:pointer">
-        العودة إلى الصفحة الرئيسية
-      </button>
-    </div>
-  `;
-
-  document.getElementById('closeAdminBtn').onclick = () => page.remove();
-        document.getElementById('loadStudentsBtn').onclick = async () => {
-    const list = document.getElementById('studentsList');
-    list.textContent = 'جارٍ تحميل الطلاب...';
-
-    const { data, error } = await supabaseClient
-      .from('profiles')
-      .select('full_name, email, account_status, created_at')
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      list.textContent = 'تعذر تحميل الطلاب. تأكد من صلاحيات قاعدة البيانات.';
-      return;
-    }
-
-    if (!data || data.length === 0) {
-      list.textContent = 'لا يوجد طلاب مسجلون حتى الآن.';
-      return;
-    }
-
-    list.innerHTML = data.map(student => `
-      <div style="padding:12px;margin-bottom:10px;border:1px solid #e2e8f0;border-radius:8px">
-        <strong>${student.full_name || 'بدون اسم'}</strong>
-        <p>البريد الإلكتروني: ${student.email || 'غير مسجل'}</p>
-        <p>حالة الحساب: ${student.account_status || 'غير محددة'}</p>
-      </div>
-    `).join('');
-  };
-        const searchBox = document.getElementById('studentSearch');
-
-  searchBox.addEventListener('input', () => {
-    const query = searchBox.value.trim().toLowerCase();
-    const filtered = data.filter(student =>
-      (student.full_name || '').toLowerCase().includes(query) ||
-      (student.email || '').toLowerCase().includes(query)
-    );
-
-    list.innerHTML = filtered.map(student => `
-      <div style="padding:12px;margin-bottom:10px;border:1px solid #e2e8f0;border-radius:8px">
-        <strong>${student.full_name || 'بدون اسم'}</strong>
-        <p>البريد الإلكتروني: ${student.email || 'غير مسجل'}</p>
-        <p>حالة الحساب: ${student.account_status || 'غير محددة'}</p>
-      </div>
-    `).join('');
-
-    if (filtered.length === 0) {
-      list.textContent = 'لا توجد نتائج مطابقة.';
-    }
-  });
-      }
-function choosePlan(plan){
-  openModal('plan');
-  document.getElementById('modalDesc').textContent =
-    'الخطة المختارة: ' + plan +
-    '. لن يتم تحصيل أي مبلغ في النسخة التجريبية.';
+<footer class="footer"><div class="wrap"><strong>فيما | FIMA English</strong><p class="small">منصة تعليمية مستقلة لتعلّم الإنجليزية. لا تشارك كلمة مرورك مع أي شخص.</p></div></footer>
+<div id="modalRoot" class="hidden"></div>
+<div id="pageRoot"></div>
+<script>
+const SUPABASE_URL = 'https://zsxczhagznoevjayxjma.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_f1_pd3WLrjYXMlnBsSA_6g_V7cUl';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+let currentSession = null;
+let isAdmin = false;
+let activeLesson = null;
+const lessons = [
+ {id:1,title:'الحروف والتحيات',level:'مبتدئ',duration:'8 دقائق',intro:'في هذا الدرس ستتعلّم تحيات أساسية باللغة الإنجليزية.',points:[['Hello','مرحبًا'],['Good morning','صباح الخير'],['Good evening','مساء الخير'],['Goodbye','إلى اللقاء']],question:'ما معنى Hello؟',options:['وداعًا','مرحبًا','تصبح على خير'],answer:1,explain:'Hello معناها مرحبًا.'},
+ {id:2,title:'التعريف بنفسك',level:'مبتدئ',duration:'10 دقائق',intro:'تعلّم كيف تقول اسمك وتعرّف بنفسك.',points:[['My name is Ali.','اسمي علي.'],['I am a student.','أنا طالب.'],['Nice to meet you.','سعيد بلقائك.'],['How are you?','كيف حالك؟']],question:'ما معنى My name is Sara؟',options:['أنا بخير','اسمي سارة','أين تسكن؟'],answer:1,explain:'My name is Sara معناها اسمي سارة.'},
+ {id:3,title:'الأرقام من 1 إلى 10',level:'مبتدئ',duration:'8 دقائق',intro:'تعرّف على الأرقام الأساسية.',points:[['One — 1','واحد'],['Two — 2','اثنان'],['Three — 3','ثلاثة'],['Four — 4','أربعة'],['Five — 5','خمسة'],['Six — 6','ستة'],['Seven — 7','سبعة'],['Eight — 8','ثمانية'],['Nine — 9','تسعة'],['Ten — 10','عشرة']],question:'ما الرقم الذي تعنيه كلمة Three؟',options:['2','3','4'],answer:1,explain:'Three تعني ثلاثة، أي 3.'},
+ {id:4,title:'ضمائر الفاعل',level:'مبتدئ',duration:'12 دقيقة',intro:'الضمائر تساعدك على تكوين الجمل.',points:[['I','أنا'],['You','أنت / أنتم'],['He','هو'],['She','هي'],['We','نحن'],['They','هم']],question:'أي ضمير يعني «هي»؟',options:['He','She','They'],answer:1,explain:'She تعني هي.'},
+ {id:5,title:'فعل be: am / is / are',level:'مبتدئ',duration:'12 دقيقة',intro:'استخدم am وis وare لتكوين جمل بسيطة.',points:[['I am happy.','أنا سعيد.'],['He is a teacher.','هو معلّم.'],['She is here.','هي هنا.'],['They are friends.','هم أصدقاء.']],question:'أكمل: I ___ a student.',options:['is','are','am'],answer:2,explain:'مع I نستخدم am: I am a student.'},
+ {id:6,title:'أشياء يومية',level:'مبتدئ',duration:'10 دقائق',intro:'كلمات إنجليزية تستخدمها كل يوم.',points:[['Book','كتاب'],['Phone','هاتف'],['Water','ماء'],['Food','طعام'],['House','منزل'],['Friend','صديق']],question:'ما معنى Water؟',options:['ماء','كتاب','منزل'],answer:0,explain:'Water معناها ماء.'}
+];
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function scrollToLessons(){document.getElementById('lessons').scrollIntoView({behavior:'smooth'});}
+function renderLessons(){
+ const done = getLocalProgress();
+ document.getElementById('lessonList').innerHTML=lessons.map(l=>`<article class="lesson"><div class="row"><span class="tag">${l.level}</span><span class="small muted">${l.duration}</span></div><h3>${l.id}. ${escapeHtml(l.title)}</h3><p class="muted">${escapeHtml(l.intro)}</p><div class="row"><span class="small">${done.includes(l.id)?'✅ مكتمل':'📖 درس + اختبار'}</span><button class="${done.includes(l.id)?'secondary':'primary'}" onclick="openLesson(${l.id})">${done.includes(l.id)?'مراجعة الدرس':'ابدأ الدرس'}</button></div></article>`).join('');
 }
-document.getElementById('joinForm').addEventListener('submit', async e => {
-  e.preventDefault();
-
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-  const toast = document.getElementById('toast');
-
-  toast.style.display = 'block';
-  toast.textContent = 'Creating your account...';
-
-  try {
-    const { error } = await supabaseClient.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        data: { full_name: name }
-      }
-    });
-
-    if (error) throw error;
-
-    toast.textContent = 'Account created. Please check your email to confirm your account.';
-  } catch (error) {
-    toast.textContent = 'Registration failed: ' + error.message;
-  }
-});
-modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
-    </script>
-</body></html>
+function getLocalProgress(){try{return JSON.parse(localStorage.getItem('fima_progress')||'[]')}catch{return []}}
+function saveLocalProgress(id){let p=getLocalProgress();if(!p.includes(id)){p.push(id);localStorage.setItem('fima_progress',JSON.stringify(p));}renderLessons();}
+function openAuth(mode){
+ const root=document.getElementById('modalRoot');root.classList.remove('hidden');
+ const signup=mode==='signup';
+ root.innerHTML=`<div class="overlay" onclick="if(event.target===this)closeModal()"><div class="modal"><h2>${signup?'إنشاء حساب جديد':'تسجيل الدخول'}</h2><p class="muted">${signup?'أنشئ حسابًا لحفظ تقدّمك.':'أدخل بيانات حسابك للمتابعة.'}</p>
+ <form id="authForm"><div id="nameWrap" class="${signup?'':'hidden'}"><label class="label" for="authName">الاسم بالكامل</label><input class="field" id="authName" autocomplete="name" maxlength="100" ${signup?'required':''}></div>
+ <label class="label" for="authEmail">البريد الإلكتروني</label><input class="field" id="authEmail" type="email" autocomplete="email" required>
+ <label class="label" for="authPassword">كلمة المرور</label><input class="field" id="authPassword" type="password" autocomplete="${signup?'new-password':'current-password'}" minlength="8" required>
+ <div id="authMessage" class="notice hidden"></div><button class="primary" id="authSubmit" type="submit" style="width:100%">${signup?'إنشاء الحساب':'دخول'}</button></form>
+ <div class="modal-actions" style="margin-top:12px"><button class="plain" onclick="openAuth('${signup?'login':'signup'}')">${signup?'لديك حساب؟ سجّل الدخول':'إنشاء حساب جديد'}</button><button class="plain" onclick="forgotPassword()">نسيت كلمة المرور؟</button><button class="plain" onclick="closeModal()">إغلاق</button></div>
+ <p class="small muted">لو أنشأت حسابًا جديدًا، افتح رسالة التأكيد التي ستصلك على البريد الإلكتروني.</p></div></div>`;
+ document.getElementById('authForm').addEventListener('submit',async e=>{
+  e.preventDefault();const btn=document.getElementById('authSubmit');const msg=document.getElementById('authMessage');btn.disabled=true;btn.textContent='جارٍ التنفيذ...';
+  const email=document.getElementById('authEmail').value.trim();const password=document.getElementById('authPassword').value;let result;
+  if(signup){const full_name=document.getElementById('authName').value.trim();result=await supabaseClient.auth.signUp({email,password,options:{data:{full_name},emailRedirectTo:location.origin+location.pathname}});}
+  else{result=await supabaseClient.auth.signInWithPassword({email,password});}
+  btn.disabled=false;btn.textContent=signup?'إنشاء الحساب':'دخول';
+  if(result.error){msg.className='notice error';msg.textContent='تعذر إتمام العملية: '+result.error.message;return;}
+  if(signup&&!result.data.session){msg.className='notice success';msg.textContent='تم إنشاء الحساب. افتح رسالة التأكيد في بريدك الإلكتروني، ثم ارجع وسجّل الدخول.';return;}
+  msg.className='notice success';msg.textContent='تم بنجاح.';await refreshAuth();setTimeout(closeModal,700);
+ });
+}
+function closeModal(){document.getElementById('modalRoot').classList.add('hidden');document.getElementById('modalRoot').innerHTML='';}
+async function forgotPassword(){
+ const email=document.getElementById('authEmail')?.value.trim();if(!email){alert('اكتب بريدك الإلكتروني أولًا في خانة البريد.');return;}
+ const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+ if(error)alert('تعذر إرسال رابط الاستعادة: '+error.message);else alert('لو البريد مسجل، ستصلك رسالة لاستعادة كلمة المرور. افحص صندوق الوارد والرسائل غير المرغوب فيها.');
+}
+async function refreshAuth(){
+ const {data}=await supabaseClient.auth.getSession();currentSession=data.session;isAdmin=false;
+ if(currentSession){const {data:adminRecord,error}=await supabaseClient.from('admin_users').select('user_id').eq('user_id',currentSession.user.id).maybeSingle();isAdmin=!error&&!!adminRecord;}
+ document.getElementById('loginBtn').classList.toggle('hidden',!!currentSession);
+ document.getElementById('signupBtn').classList.toggle('hidden',!!currentSession);
+ document.getElementById('accountBtn').classList.toggle('hidden',!currentSession);
+ document.getElementById('logoutBtn').classList.toggle('hidden',!currentSession);
+ document.getElementById('adminBtn').classList.toggle('hidden',!isAdmin);
+}
+async function logout(){const {error}=await supabaseClient.auth.signOut();if(error){alert('تعذر تسجيل الخروج.');return;}document.getElementById('pageRoot').innerHTML='';await refreshAuth();alert('تم تسجيل الخروج.');}
+async function showAccount(){
+ if(!currentSession){openAuth('login');return;}
+ const root=document.getElementById('pageRoot');root.innerHTML=`<div class="page"><div class="page-inner"><div class="page-head"><h2>حسابي | فيما</h2><button class="plain" onclick="closePage()">العودة للموقع</button></div><div id="accountInfo" class="panel">جارٍ تحميل بيانات الحساب...</div><div class="stats"><div class="stat"><span class="muted">إجمالي الدروس</span><strong>${lessons.length}</strong></div><div class="stat"><span class="muted">الدروس المكتملة</span><strong id="doneCount">0</strong></div><div class="stat"><span class="muted">التقدّم</span><strong id="donePercent">0%</strong></div></div><div class="panel"><h3>تقدّمي في الدروس</h3><div class="progress-track"><div id="accountProgress" class="progress-fill"></div></div><div id="accountLessons" class="lesson-list"></div></div></div></div>`;
+ const user=currentSession.user;let name=user.user_metadata?.full_name||'طالب فيما';
+ const {data:profile}=await supabaseClient.from('profiles').select('full_name,email,created_at,account_status').eq('id',user.id).maybeSingle();if(profile?.full_name)name=profile.full_name;
+ document.getElementById('accountInfo').innerHTML=`<h3>${escapeHtml(name)}</h3><p>البريد الإلكتروني: ${escapeHtml(user.email)}</p><p>تاريخ إنشاء الحساب: ${new Date(user.created_at).toLocaleDateString('ar-EG')}</p><p>حالة الحساب: ${escapeHtml(profile?.account_status||'active')}</p>`;
+ const ids=await getProgressIds();const count=ids.length;document.getElementById('doneCount').textContent=count;document.getElementById('donePercent').textContent=Math.round(count/lessons.length*100)+'%';document.getElementById('accountProgress').style.width=(count/lessons.length*100)+'%';
+ document.getElementById('accountLessons').innerHTML=lessons.map(l=>`<article class="lesson"><span>${ids.includes(l.id)?'✅':'◻️'}</span> ${l.id}. ${escapeHtml(l.title)} <button class="secondary" onclick="openLesson(${l.id})">فتح</button></article>`).join('');
+}
+function closePage(){document.getElementById('pageRoot').innerHTML='';}
+async function getProgressIds(){
+ let ids=getLocalProgress();if(currentSession){const {data,error}=await supabaseClient.from('learning_progress').select('lesson_id').eq('user_id',currentSession.user.id);if(!error&&data){ids=[...new Set([...ids,...data.map(x=>Number(x.lesson_id))])];localStorage.setItem('fima_progress',JSON.stringify(ids));}}
+ return ids;
+}
+async function markProgress(id,score){
+ saveLocalProgress(id);
+ if(currentSession){const {error}=await supabaseClient.from('learning_progress').upsert({user_id:currentSession.user.id,lesson_id:id,quiz_score:score,completed_at:new Date().toISOString()},{onConflict:'user_id,lesson_id'});if(error)console.warn('Progress not saved to cloud:',error.message);}
+}
+function openLesson(id){
+ const l=lessons.find(x=>x.id===id);if(!l)return;activeLesson=l;
+ const root=document.getElementById('pageRoot');root.innerHTML=`<div class="page"><div class="page-inner"><div class="page-head"><h2>الدرس ${l.id}: ${escapeHtml(l.title)}</h2><button class="plain" onclick="closePage()">إغلاق الدرس</button></div><div class="panel"><span class="tag">${l.level}</span><p>${escapeHtml(l.intro)}</p><h3>الكلمات والجمل</h3>${l.points.map(p=>`<div style="display:flex;justify-content:space-between;gap:15px;padding:10px;border-bottom:1px solid #e2e8f0"><strong dir="ltr">${escapeHtml(p[0])}</strong><span>${escapeHtml(p[1])}</span></div>`).join('')}<h3 style="margin-top:25px">اختبر فهمك</h3><p>${escapeHtml(l.question)}</p><div id="quizOptions">${l.options.map((o,i)=>`<button class="quiz-option" onclick="answerQuiz(${i})">${String.fromCharCode(65+i)}. ${escapeHtml(o)}</button>`).join('')}</div><div id="quizResult" class="notice hidden"></div><button id="finishLessonBtn" class="primary hidden" style="margin-top:12px" onclick="finishLesson()">حفظ إكمال الدرس</button></div></div></div>`;
+}
+let selectedCorrect=false,quizAnswered=false;
+function answerQuiz(i){
+ if(quizAnswered)return;quizAnswered=true;selectedCorrect=i===activeLesson.answer;
+ const res=document.getElementById('quizResult');res.classList.remove('hidden');res.className='notice '+(selectedCorrect?'success':'error');res.textContent=(selectedCorrect?'إجابة صحيحة! ':'الإجابة غير صحيحة. ')+activeLesson.explain;
+ document.querySelectorAll('.quiz-option').forEach((b,j)=>{b.disabled=true;if(j===activeLesson.answer)b.style.borderColor='#10b981';});
+ document.getElementById('finishLessonBtn').classList.remove('hidden');
+}
+async function finishLesson(){if(!quizAnswered){alert('جاوب عن سؤال الاختبار أولًا.');return;}await markProgress(activeLesson.id,selectedCorrect?100:0);alert(currentSession?'تم حفظ تقدّمك.':'تم وضع الدرس كمكتمل على هذا الجهاز. سجّل الدخول لمزامنة التقدّم مع حسابك.');closePage();if(currentSession)showAccount();}
+async function showAdmin(){
+ if(!currentSession){openAuth('login');return;}
+ const {data:adminRecord,error:adminError}=await supabaseClient.from('admin_users').select('user_id').eq('user_id',currentSession.user.id).maybeSingle();
+ if(adminError||!adminRecord){alert('ليس لديك صلاحية دخول لوحة المدير.');await refreshAuth();return;}
+ const root=document.getElementById('pageRoot');root.innerHTML=`<div class="page"><div class="page-inner"><div class="page-head"><h2>لوحة المدير | فيما</h2><button class="plain" onclick="closePage()">العودة للموقع</button></div><div class="notice">تم التحقق من صلاحية المدير. بيانات الطلاب تظهر حسب سياسات قاعدة البيانات.</div><div class="panel"><h3>إدارة الطلاب</h3><input class="field" id="studentSearch" type="search" placeholder="ابحث باسم الطالب أو البريد الإلكتروني..."><button class="primary" id="loadStudentsBtn">تحميل الطلاب</button><div id="studentsList" style="margin-top:16px">اضغط «تحميل الطلاب» لعرض القائمة.</div></div><div class="panel" style="margin-top:16px"><h3>محتوى المنصة</h3><p>عدد الدروس الحالية: ${lessons.length}</p><p class="muted">تعديل الدروس وإضافة محتوى جديد يتم في ملف الموقع. لا تغيّر صلاحيات الطلاب من المتصفح.</p></div></div></div>`;
+ let studentData=[];
+ async function loadStudents(){
+  const list=document.getElementById('studentsList');list.textContent='جارٍ تحميل الطلاب...';
+  const {data,error}=await supabaseClient.from('profiles').select('id,full_name,email,account_status,created_at').order('created_at',{ascending:false}).limit(500);
+  if(error){list.innerHTML='<div class="notice error">تعذر تحميل الطلاب. تأكد من صلاحيات جدول profiles وسياسات RLS.</div>';return;}
+  studentData=data||[];drawStudents();
+ }
+ function drawStudents(){
+  const q=(document.getElementById('studentSearch').value||'').trim().toLowerCase();
+  const filtered=studentData.filter(s=>(s.full_name||'').toLowerCase().includes(q)||(s.email||'').toLowerCase().includes(q));
+  const list=document.getElementById('studentsList');
+  if(!filtered.length){list.textContent='لا توجد نتائج مطابقة.';return;}
+  list.innerHTML=filtered.map(s=>`<div class="admin-student"><strong>${escapeHtml(s.full_name||'بدون اسم')}</strong><p>البريد الإلكتروني: ${escapeHtml(s.email||'غير مسجل')}</p><p>الحالة: ${escapeHtml(s.account_status||'غير محددة')}</p><p class="small muted">تاريخ التسجيل: ${s.created_at?new Date(s.created_at).toLocaleDateString('ar-EG'):'غير معروف'}</p></div>`).join('');
+ }
+ document.getElementById('loadStudentsBtn').onclick=loadStudents;
+ document.getElementById('studentSearch').addEventListener('input',drawStudents);
+}
+supabaseClient.auth.onAuthStateChange(async(event,session)=>{currentSession=session;setTimeout(()=>refreshAuth(),0);});
+renderLessons();refreshAuth();
+</script>
+</body>
+</html>
