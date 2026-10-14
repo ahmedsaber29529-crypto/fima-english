@@ -235,6 +235,12 @@ closeModal();
       <div style="margin-top:20px;padding:20px;border:1px solid #e2e8f0;border-radius:12px">
   <h3>إدارة الطلاب</h3>
   <p>عرض حسابات الطلاب المسجلين في منصة فيما.</p>
+  <input
+  id="studentSearch"
+  type="search"
+  placeholder="ابحث باسم الطالب أو البريد الإلكتروني..."
+  style="width:100%;padding:12px;margin:12px 0;border:1px solid #cbd5e1;border-radius:8px;box-sizing:border-box"
+>
   <button id="loadStudentsBtn" style="padding:12px 18px;border:0;border-radius:8px;background:#2563eb;color:white;cursor:pointer">
     عرض الطلاب
   </button>
@@ -274,6 +280,27 @@ closeModal();
       </div>
     `).join('');
   };
+        const searchBox = document.getElementById('studentSearch');
+
+  searchBox.addEventListener('input', () => {
+    const query = searchBox.value.trim().toLowerCase();
+    const filtered = data.filter(student =>
+      (student.full_name || '').toLowerCase().includes(query) ||
+      (student.email || '').toLowerCase().includes(query)
+    );
+
+    list.innerHTML = filtered.map(student => `
+      <div style="padding:12px;margin-bottom:10px;border:1px solid #e2e8f0;border-radius:8px">
+        <strong>${student.full_name || 'بدون اسم'}</strong>
+        <p>البريد الإلكتروني: ${student.email || 'غير مسجل'}</p>
+        <p>حالة الحساب: ${student.account_status || 'غير محددة'}</p>
+      </div>
+    `).join('');
+
+    if (filtered.length === 0) {
+      list.textContent = 'لا توجد نتائج مطابقة.';
+    }
+  });
       }
 function choosePlan(plan){
   openModal('plan');
