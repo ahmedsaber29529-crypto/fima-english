@@ -158,6 +158,7 @@ async function showAccount(){
       .select('user_id')
       .eq('user_id', session.user.id)
       .maybeSingle();
+    console.log('نتيجة فحص المدير:', { adminRecord, error });
 
     if (!error && adminRecord) {
       adminBtn.style.display = 'inline-block';
