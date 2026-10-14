@@ -25,13 +25,47 @@ header{position:sticky;top:0;background:#ffffffed;backdrop-filter:blur(12px);bor
 <section class="section soft"><div class="wrap" style="text-align:center"><h2 style="font-size:32px;color:var(--navy)">ابدأ صغير… واتقدّم كل يوم.</h2><p style="color:var(--muted)">فيما — الإنجليزي أقرب مما تتخيّل.</p><button class="btn" onclick="openModal('join')">انضم لقائمة المهتمين</button></div></section>
 </main>
 <footer><div class="wrap foot"><div><strong>فيما | FIMA English</strong><br><small>الإنجليزي ببساطة، خطوة بخطوة.</small></div><div><b>روابط</b><br><a href="#courses">المسارات</a> · <a href="#pricing">الاشتراكات</a> · <a href="#faq">الأسئلة الشائعة</a></div><div><small>© 2026 فيما. كل الحقوق محفوظة.<br>أضف بيانات التواصل والسياسات قبل الإطلاق.</small></div></div></footer>
-<div class="modal" id="modal"><div class="modalBox"><button class="close" onclick="closeModal()">×</button><h2 id="modalTitle">انضم إلى فيما</h2><p id="modalDesc" style="color:#68758a;font-size:14px">سجّل اهتمامك لتجربة المنصة.</p><form id="joinForm"><label for="name">الاسم</label><input id="name" required placeholder="اكتب اسمك"><label for="email">البريد الإلكتروني</label><input id="email" type="email" required placeholder="name@example.com"><label for="level">مستواك الحالي</label><select id="level"><option>لسه هبدأ من الصفر</option><option>مبتدئ</option><option>متوسط</option><option>متقدم</option></select><button class="btn" type="submit">تأكيد تجريبي</button><div class="toast" id="toast">تم التحقق من النموذج في هذه النسخة التجريبية فقط. لم تُرسل بياناتك أو تُحفظ.</div></form></div></div>
-<script>
+<div class="modal" id="modal"><div class="modalBox"><button class="close" onclick="closeModal()">×</button><h2 id="modalTitle">انضم إلى فيما</h2><p id="modalDesc" style="color:#68758a;font-size:14px">سجّل اهتمامك لتجربة المنصة.</p><form id="joinForm"><label for="name">الاسم</label><input id="name" required placeholder="اكتب اسمك"><label for="email">البريد الإلكتروني</label><input id="email" type="email" required placeholder="name@example.com"> <label for="password">كلمة المرور</label>
+<input id="password" type="password" required minlength="8" autocomplete="new-password" placeholder="8 أحرف على الأقل"><label for="level">مستواك الحالي</label><select id="level"><option>لسه هبدأ من الصفر</option><option>مبتدئ</option><option>متوسط</option><option>متقدم</option></select><button class="btn" type="submit">تأكيد تجريبي</button><div class="toast" id="toast">تم التحقق من النموذج في هذه النسخة التجريبية فقط. لم تُرسل بياناتك أو تُحفظ.</div></form></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+ const SUPABASE_URL = 'https://zsxczhagznoevjayxjma.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_f1_pd3WLrjYXMlnBsSA_6g_V7cUlYUb';
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 const modal=document.getElementById('modal');
 function openModal(mode){document.getElementById('modalTitle').textContent=mode==='join'?'انضم إلى فيما':'اختيار الاشتراك';document.getElementById('modalDesc').textContent='هذه خطوة تجريبية لتوضيح شكل التسجيل قبل ربط النظام الحقيقي.';document.getElementById('toast').style.display='none';modal.classList.add('show')}
 function closeModal(){modal.classList.remove('show')}
 function choosePlan(plan){openModal('plan');document.getElementById('modalDesc').textContent='الخطة المختارة: '+plan+'. لن يتم تحصيل أي مبلغ في النسخة التجريبية.'}
-document.getElementById('joinForm').addEventListener('submit',e=>{e.preventDefault();document.getElementById('toast').style.display='block'});
+document.getElementById('joinForm').addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const toast = document.getElementById('toast');
+
+  toast.style.display = 'block';
+  toast.textContent = 'Creating your account...';
+
+  try {
+    const { error } = await supabaseClient.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: { full_name: name }
+      }
+    });
+
+    if (error) throw error;
+
+    toast.textContent = 'Account created. Please check your email to confirm your account.';
+  } catch (error) {
+    toast.textContent = 'Registration failed: ' + error.message;
+  }
+});
 modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
-</script>
+    </script>
 </body></html>
