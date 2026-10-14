@@ -34,7 +34,29 @@ const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_f1_pd3WLrjYXMlnBsSA_6g_V7cUlYUb
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
-);
+  );
+  supabaseClient.auth.onAuthStateChange((event, session) => {
+  if (event === 'PASSWORD_RECOVERY') {
+    setTimeout(async () => {
+      const newPassword = prompt('اكتب كلمة المرور الجديدة (8 أحرف على الأقل):');
+
+      if (!newPassword || newPassword.length < 8) {
+        alert('كلمة المرور يجب أن تكون 8 أحرف على الأقل.');
+        return;
+      }
+
+      const { error } = await supabaseClient.auth.updateUser({
+        password: newPassword
+      });
+
+      if (error) {
+        alert('تعذر تغيير كلمة المرور: ' + error.message);
+      } else {
+        alert('تم تغيير كلمة المرور بنجاح! يمكنك تسجيل الدخول الآن.');
+      }
+    }, 0);
+  }
+});
 const modal=document.getElementById('modal');
 function openModal(mode){document.getElementById('modalTitle').textContent=mode==='join'?'انضم إلى فيما':'اختيار الاشتراك';document.getElementById('modalDesc').textContent='هذه خطوة تجريبية لتوضيح شكل التسجيل قبل ربط النظام الحقيقي.';document.getElementById('toast').style.display='none';modal.classList.add('show')}
 function closeModal(){modal.classList.remove('show')}
