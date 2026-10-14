@@ -232,7 +232,14 @@ closeModal();
       <p>تم التحقق من صلاحيات المدير بنجاح.</p>
       <hr>
       <h3>إدارة المنصة</h3>
-      <p>هنا سنضيف أدوات إدارة الطلاب والدروس ومحتوى المنصة.</p>
+      <div style="margin-top:20px;padding:20px;border:1px solid #e2e8f0;border-radius:12px">
+  <h3>إدارة الطلاب</h3>
+  <p>عرض حسابات الطلاب المسجلين في منصة فيما.</p>
+  <button id="loadStudentsBtn" style="padding:12px 18px;border:0;border-radius:8px;background:#2563eb;color:white;cursor:pointer">
+    عرض الطلاب
+  </button>
+  <div id="studentsList" style="margin-top:20px"></div>
+</div>
       <button id="closeAdminBtn" style="margin-top:15px;padding:12px 18px;border:0;border-radius:8px;background:#2563eb;color:white;cursor:pointer">
         العودة إلى الصفحة الرئيسية
       </button>
@@ -240,6 +247,33 @@ closeModal();
   `;
 
   document.getElementById('closeAdminBtn').onclick = () => page.remove();
+        document.getElementById('loadStudentsBtn').onclick = async () => {
+    const list = document.getElementById('studentsList');
+    list.textContent = 'جارٍ تحميل الطلاب...';
+
+    const { data, error } = await supabaseClient
+      .from('profiles')
+      .select('full_name, email, account_status, created_at')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      list.textContent = 'تعذر تحميل الطلاب. تأكد من صلاحيات قاعدة البيانات.';
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      list.textContent = 'لا يوجد طلاب مسجلون حتى الآن.';
+      return;
+    }
+
+    list.innerHTML = data.map(student => `
+      <div style="padding:12px;margin-bottom:10px;border:1px solid #e2e8f0;border-radius:8px">
+        <strong>${student.full_name || 'بدون اسم'}</strong>
+        <p>البريد الإلكتروني: ${student.email || 'غير مسجل'}</p>
+        <p>حالة الحساب: ${student.account_status || 'غير محددة'}</p>
+      </div>
+    `).join('');
+  };
       }
 function choosePlan(plan){
   openModal('plan');
