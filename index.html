@@ -569,6 +569,84 @@ function hidePanels(){['accountSection','adminSection'].forEach(id=>document.get
 async function checkAdmin(){const btn=document.getElementById('adminBtn');btn.classList.add('hidden');if(!currentUser)return;try{const {data,error}=await supabaseClient.from('admin_users').select('user_id').eq('user_id',currentUser.id).maybeSingle();if(!error&&data)btn.classList.remove('hidden')}catch(e){console.warn('Admin check failed',e)}}
 async function showAdmin(){hidePanels();document.getElementById('adminSection').classList.remove('hidden');document.getElementById('adminSection').scrollIntoView({behavior:'smooth'});await loadStudents()}
 async function loadStudents(){const body=document.getElementById('studentsBody'),n=document.getElementById('adminNotice');body.innerHTML='<tr><td colspan="3">جارٍ التحميل…</td></tr>';hideNotice(n);if(!currentUser){notice(n,'سجّل الدخول أولًا.','error');return}try{const {data:admin,error:adminErr}=await supabaseClient.from('admin_users').select('user_id').eq('user_id',currentUser.id).maybeSingle();if(adminErr)throw adminErr;if(!admin){notice(n,'هذا الحساب غير مضاف كمدير في جدول admin_users. يلزم إضافته مرة واحدة من SQL Editor في Supabase.','error');body.innerHTML='<tr><td colspan="3">لا توجد صلاحية لعرض الطلاب.</td></tr>';return}let q=supabaseClient.from('profiles').select('*').order('created_at',{ascending:false}).limit(200);const {data,error}=await q;if(error)throw error;const term=(document.getElementById('studentSearch').value||'').trim().toLowerCase();const filtered=(data||[]).filter(p=>!term||String(p.full_name||p.name||'').toLowerCase().includes(term)||String(p.email||'').toLowerCase().includes(term));body.innerHTML='';if(!filtered.length){body.innerHTML='<tr><td colspan="3">لا توجد نتائج مطابقة.</td></tr>';return}filtered.forEach(p=>{const tr=document.createElement('tr');const name=p.full_name||p.name||'—';const email=p.email||'—';const created=p.created_at?new Date(p.created_at).toLocaleDateString('ar-EG'):'—';[name,email,created].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td)});body.appendChild(tr)})}catch(err){body.innerHTML='<tr><td colspan="3">تعذر تحميل الطلاب.</td></tr>';notice(n,translateError(err.message||'تعذر تحميل بيانات الطلاب. تأكد من إعداد الجداول وسياسات RLS.'),'error')}}
+ 
+async function adminAddLesson(){
+  const n=document.getElementById('lessonAdminNotice');
+  hideNotice(n);
+  if(!currentUser){notice(n,'سجّل الدخول أولًا.','error');return}
+  const level=document.getElementById('lessonLevel').value;
+  const title=document.getElementById('lessonTitleInput').value.trim();
+  const description=document.getElementById('lessonDescriptionInput').value.trim();
+  const video=document.getElementById('lessonVideoInput').value.trim();
+  const content=document.getElementById('lessonContentInput').value.trim();
+  const order=Number(document.getElementById('lessonOrderInput').value)||1;
+  const published=document.getElementById('lessonPublishInput').checked;
+  if(!title){notice(n,'اكتب عنوان الدرس أولًا.','error');return}
+  try{
+    const {data,error}=await supabaseClient.rpc('fima_manage_lesson',{
+      p_action:'add',
+      p_level_code:level,
+      p_title:title,
+      p_description:description||null,
+      p_video_url:video||null,
+      p_content:content||null,
+      p_sort_order:order,
+      p_is_published:published
+    });
+    if(error)throw error;
+    if(!data||data.success!==true)throw new Error(data?.message||'لم يتم حفظ الدرس.');
+    notice(n,'تمت إضافة الدرس بنجاح.','success');
+    document.getElementById('lessonTitleInput').value='';
+    document.getElementById('lessonDescriptionInput').value='';
+    document.getElementById('lessonVideoInput').value='';
+    document.getElementById('lessonContentInput').value='';
+    document.getElementById('lessonPublishInput').checked=false;
+  }catch(err){
+    notice(n,translateError(err.message||'تعذر إضافة الدرس.'),'error');
+  }
+}
+
+async function adminAddExamQuestion(){
+  const n=document.getElementById('examAdminNotice');
+  hideNotice(n);
+  if(!currentUser){notice(n,'سجّل الدخول أولًا.','error');return}
+  const level=document.getElementById('examLevel').value;
+  const question=document.getElementById('examQuestionInput').value.trim();
+  const a=document.getElementById('examOptionA').value.trim();
+  const b=document.getElementById('examOptionB').value.trim();
+  const c=document.getElementById('examOptionC').value.trim();
+  const d=document.getElementById('examOptionD').value.trim();
+  const correct=document.getElementById('examCorrectOption').value;
+  const order=Number(document.getElementById('examOrderInput').value)||1;
+  if(!question||!a||!b||!c||!d){
+    notice(n,'اكتب السؤال والاختيارات الأربعة.','error');
+    return;
+  }
+  try{
+    const {data,error}=await supabaseClient.rpc('fima_manage_exam_question',{
+      p_action:'add',
+      p_level_code:level,
+      p_question_text:question,
+      p_option_a:a,
+      p_option_b:b,
+      p_option_c:c,
+      p_option_d:d,
+      p_correct_option:correct,
+      p_sort_order:order
+    });
+    if(error)throw error;
+    if(!data||data.success!==true)throw new Error(data?.message||'لم يتم حفظ السؤال.');
+    notice(n,'تمت إضافة سؤال الامتحان بنجاح.','success');
+    document.getElementById('examQuestionInput').value='';
+    document.getElementById('examOptionA').value='';
+    document.getElementById('examOptionB').value='';
+    document.getElementById('examOptionC').value='';
+    document.getElementById('examOptionD').value='';
+  }catch(err){
+    notice(n,translateError(err.message||'تعذر إضافة السؤال.'),'error');
+  }
+}
+
 function openLesson(id){const l=lessons.find(x=>x.id===id);if(!l)return;document.getElementById('lessonTitle').textContent=l.title;const content=document.getElementById('lessonContent');content.innerHTML=`<p class="muted">${l.desc}</p><h3>الكلمات الأساسية</h3>${l.words.map(w=>`<div class="row between" style="padding:8px 0;border-bottom:1px solid var(--line)"><strong dir="ltr">${w[0]}</strong><span>${w[1]}</span><button class="ghost small" onclick="speakEnglish('${w[0].replace(/'/g,"\\'")}')">🔊 استمع</button></div>`).join('')}<h3 style="margin-top:18px">اختبر نفسك</h3><p>${l.question}</p>${l.options.map((o,i)=>`<button class="quizopt" onclick="answerQuiz(${id},${i})">${o}</button>`).join('')}<div id="quizFeedback"></div><p class="notice">مثال: <span dir="ltr">${l.tip}</span></p><button class="primary full" onclick="markComplete(${id})">${completed.has(id)?'تم إكمال الدرس ✓':'علّم الدرس كمكتمل'}</button>`;document.getElementById('lessonModal').classList.remove('hidden')}
 function closeLesson(){document.getElementById('lessonModal').classList.add('hidden')}
 function answerQuiz(id,choice){const l=lessons.find(x=>x.id===id);const f=document.getElementById('quizFeedback');if(choice===l.answer)notice(f,'إجابة صحيحة! أحسنت.','success');else notice(f,'ليست الإجابة الصحيحة. جرّب مرة أخرى.','error')}
