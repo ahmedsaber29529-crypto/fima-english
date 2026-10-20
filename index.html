@@ -58,7 +58,91 @@ const sentences = [
 ['What are your plans for tomorrow?','ما خططك للغد؟'],['I have an appointment.','لدي موعد.'],['I will call you later.','سأتصل بك لاحقًا.'],['Please send me a message.','أرسل لي رسالة من فضلك.'],['I did not hear my phone.','لم أسمع هاتفي.'],['My phone battery is low.','بطارية هاتفي منخفضة.'],['I need to charge my phone.','أحتاج إلى شحن هاتفي.'],['I am on my way.','أنا في الطريق.'],['I will be there soon.','سأصل إلى هناك قريبًا.'],['Have a wonderful day!','أتمنى لك يومًا رائعًا!']
 ];
 function renderSentences(){const box=document.getElementById('sentenceList');if(!box)return;const q=(document.getElementById('sentenceSearch').value||'').trim().toLowerCase();const filtered=sentences.filter(x=>x[0].toLowerCase().includes(q)||x[1].includes(q));box.innerHTML='';filtered.forEach((x,i)=>{const card=document.createElement('article');card.className='sentence-item';const en=document.createElement('div');en.className='en';en.textContent=(sentences.indexOf(x)+1)+'. '+x[0];const ar=document.createElement('div');ar.className='ar';ar.textContent=x[1];const b=document.createElement('button');b.className='ghost small';b.textContent='🔊 استمع';b.onclick=()=>speakEnglish(x[0]);card.append(en,ar,b);box.appendChild(card)});if(!filtered.length)box.textContent='لا توجد جمل مطابقة.'}
-async function requestSubscription(plan){const n=document.getElementById('subscriptionNotice');if(!currentUser){openAuth('login');notice(n,'سجّل الدخول أولًا، ثم اختر الاشتراك.','error');return}const label=plan==='annual'?'سنوي':'شهري';const method=prompt('اختر طريقة الدفع بكتابة: InstaPay أو تحويل بنكي');if(!method)return;const reference=prompt('اكتب رقم العملية أو مرجع التحويل (لا تكتب كلمة مرور أو بيانات بطاقة)');if(!reference)return;try{const {error}=await supabaseClient.from('subscription_requests').insert({user_id:currentUser.id,plan:plan,payment_method:method.trim(),payment_reference:reference.trim(),amount_egp:plan==='annual'?1450:199,status:'pending'});if(error)throw error;notice(n,'تم إرسال طلب الاشتراك '+label+' بقيمة '+(plan==='annual'?'1450':'199')+' جنيه للمراجعة. لن يتفعّل الاشتراك إلا بعد التحقق من الدفع.','success')}catch(e){notice(n,'تعذر إرسال طلب الاشتراك. تأكد من تشغيل ملف supabase_setup.sql في SQL Editor. التفاصيل: '+(e.message||''),'error')}}
+
+async function requestSubscription(plan) {
+  const n = document.getElementById('subscriptionNotice');
+
+  if (!currentUser) {
+    openAuth('login');
+    notice(n, 'سجّل الدخول أولًا، ثم اختر الاشتراك.', 'error');
+    return;
+  }
+
+  if (plan !== 'monthly' && plan !== 'annual') {
+    notice(n, 'خطة الاشتراك غير صحيحة.', 'error');
+    return;
+  }
+
+  const label = plan === 'annual' ? 'سنوي' : 'شهري';
+  const amount = plan === 'annual' ? 1450 : 199;
+
+  const choice = prompt(
+    'اختر طريقة الدفع بكتابة أحد الخيارين فقط:\n1- InstaPay\n2- تحويل بنكي'
+  );
+
+  if (choice === null) return;
+
+  const normalized = choice.trim().toLowerCase();
+
+  let method;
+
+  if (['instapay', 'انستاباي', 'إنستاباي'].includes(normalized)) {
+    method = 'InstaPay';
+  } else if (
+    ['تحويل بنكي', 'bank transfer', 'bank'].includes(normalized)
+  ) {
+    method = 'تحويل بنكي';
+  } else {
+    notice(
+      n,
+      'طريقة الدفع غير صحيحة. اكتب InstaPay أو تحويل بنكي.',
+      'error'
+    );
+    return;
+  }
+
+  const reference = prompt(
+    'اكتب رقم العملية أو مرجع التحويل بعد إتمام الدفع. لن يتفعّل الاشتراك إلا بعد مراجعة المدير.'
+  );
+
+  if (reference === null) return;
+
+  if (!reference.trim() || reference.trim().length < 3) {
+    notice(n, 'اكتب مرجع عملية صحيحًا.', 'error');
+    return;
+  }
+
+  try {
+    const { error } = await supabaseClient
+      .from('subscription_requests')
+      .insert({
+        user_id: currentUser.id,
+        plan: plan,
+        payment_method: method,
+        transaction_reference: reference.trim(),
+        amount: amount,
+        status: 'pending'
+      });
+
+    if (error) throw error;
+
+    notice(
+      n,
+      'تم إرسال طلب الاشتراك ' + label + ' بقيمة ' +
+      amount + ' جنيه للمراجعة. انتظر تأكيد المدير.',
+      'success'
+    );
+  } catch (e) {
+    console.error('Subscription request error:', e);
+
+    notice(
+      n,
+      'تعذر تسجيل الطلب في قاعدة البيانات. لم يتم تأكيد الاشتراك. راجع إعدادات قاعدة البيانات.',
+      'error'
+    );
+  }
+}
+
 
 function openAuth(mode){authMode=mode;document.getElementById('modal').classList.remove('hidden');hideNotice(document.getElementById('modalNotice'));updateAuthMode()}
 function closeModal(){document.getElementById('modal').classList.add('hidden')}
