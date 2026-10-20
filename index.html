@@ -21,7 +21,17 @@
 <section class="section" id="sentences"><div class="row between"><h2>100 جملة للتعارف والحياة اليومية</h2><span class="muted small">مع الترجمة والاستماع</span></div><p class="muted">ابحث في الجمل أو استمع إلى النطق الإنجليزي.</p><input id="sentenceSearch" placeholder="ابحث بالإنجليزية أو العربية..." oninput="renderSentences()" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;margin-bottom:12px"><div class="sentence-list" id="sentenceList"></div></section>
 <section class="section"><div class="card"><h2>رحلتك في التعلم</h2><p class="muted">سجّل الدخول لحفظ تقدمك والوصول إلى صفحة حسابك من أي وقت.</p><button class="primary" onclick="openAuth('signup')">إنشاء حساب جديد</button></div></section>
 <section id="accountSection" class="section hidden"><div class="row between"><h2>حسابي</h2><button class="ghost" onclick="hidePanels()">إغلاق</button></div><div class="card"><h3 id="accountName">حساب الطالب</h3><p id="accountEmail" class="muted"></p><div class="stats"><div class="stat"><strong id="statDone">0</strong><span class="small">دروس مكتملة</span></div><div class="stat"><strong id="statTotal">6</strong><span class="small">إجمالي الدروس</span></div><div class="stat"><strong id="statPercent">0%</strong><span class="small">التقدم</span></div></div><div style="margin-top:18px"><div class="progressbar"><span id="accountProgress"></span></div></div></div></section>
-<section id="adminSection" class="section hidden"><div class="row between"><h2>لوحة المدير</h2><button class="ghost" onclick="hidePanels()">إغلاق</button></div><div class="card"><p class="muted">إدارة حسابات الطلاب المسجلة في المنصة.</p><div class="row"><input id="studentSearch" placeholder="ابحث بالبريد أو الاسم" style="flex:1;min-width:180px;padding:11px;border:1px solid #cbd5e1;border-radius:10px"><button class="primary" onclick="loadStudents()">بحث / تحديث</button></div><div id="adminNotice" class="notice hidden"></div><div class="tablewrap" style="margin-top:14px"><table><thead><tr><th>الاسم</th><th>البريد الإلكتروني</th><th>تاريخ التسجيل</th></tr></thead><tbody id="studentsBody"><tr><td colspan="3">اضغط تحديث لعرض الطلاب.</td></tr></tbody></table></div><p class="small muted">تعرض اللوحة بيانات الملفات الشخصية التي تسمح بها سياسات قاعدة البيانات، ولا تعرض كلمات المرور.</p></div></section>
+<section id="adminSection" class="section hidden"><div class="row between"><h2>لوحة المدير</h2><button class="ghost" onclick="hidePanels()">إغلاق</button></div><div class="card"><p class="muted">إدارة حسابات الطلاب المسجلة في المنصة.</p><div class="row"><input id="studentSearch" placeholder="ابحث بالبريد أو الاسم" style="flex:1;min-width:180px;padding:11px;border:1px solid #cbd5e1;border-radius:10px"><button class="primary" onclick="loadStudents()">بحث / تحديث</button></div><div id="adminNotice" class="notice hidden"></div><div class="tablewrap" style="margin-top:14px"><table><thead><tr><th>الاسم</th><th>البريد الإلكتروني</th><th>تاريخ التسجيل</th></tr></thead><tbody id="studentsBody"><tr><td colspan="3">اضغط تحديث لعرض الطلاب.</td></tr></tbody></table></div><p class="small muted">تعرض اللوحة بيانات الملفات الشخصية التي تسمح بها سياسات قاعدة البيانات، ولا تعرض كلمات المرور.</p><div class="card" style="margin-top:20px">
+  <h3>طلبات الاشتراك</h3>
+  <p class="muted">مراجعة طلبات الاشتراك الشهرية والسنوية.</p>
+  <button class="primary" onclick="loadSubscriptionRequests()">
+    عرض طلبات الاشتراك
+  </button>
+  <div id="subscriptionRequestsNotice" class="notice hidden"></div>
+  <div id="subscriptionRequestsList" style="margin-top:12px">
+    اضغط على عرض طلبات الاشتراك.
+  </div>
+</div></div></section>
 </main><footer class="footer"><div class="wrap">فيما FIMA English © <span id="year"></span> — اتعلم الإنجليزي ببساطة • Learn English. Live Confidently.</div></footer>
 <div id="modal" class="modal hidden" role="dialog" aria-modal="true"><div class="modalbox"><div class="row between"><h2 id="modalTitle">تسجيل الدخول</h2><button class="ghost" onclick="closeModal()" aria-label="إغلاق">✕</button></div><div id="modalNotice" class="notice hidden"></div><form id="authForm"><div class="field hidden" id="nameField"><label for="fullName">الاسم</label><input id="fullName" autocomplete="name" placeholder="اسمك"></div><div class="field"><label for="email">البريد الإلكتروني</label><input id="email" type="email" autocomplete="email" required placeholder="name@example.com"></div><div class="field"><label for="password">كلمة المرور</label><input id="password" type="password" autocomplete="current-password" minlength="8" required placeholder="8 أحرف على الأقل"></div><button class="primary full" id="authSubmit" type="submit">دخول</button></form><div class="row between" style="margin-top:12px"><button class="secondary" id="switchAuth" onclick="switchAuthMode()">إنشاء حساب جديد</button><button class="ghost small" onclick="forgotPassword()">نسيت كلمة المرور؟</button></div><p class="small muted">إنشاء الحساب قد يتطلب تأكيد البريد الإلكتروني.</p></div></div>
 <div id="lessonModal" class="modal hidden"><div class="modalbox"><div class="row between"><h2 id="lessonTitle"></h2><button class="ghost" onclick="closeLesson()">✕</button></div><div id="lessonContent"></div></div></div>
@@ -169,5 +179,117 @@ function speakEnglish(text){if('speechSynthesis'in window){const u=new SpeechSyn
 async function forgotPassword(){const email=document.getElementById('email').value.trim();if(!email){notice(document.getElementById('modalNotice'),'اكتب بريدك الإلكتروني أولًا.','error');return}try{const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;notice(document.getElementById('modalNotice'),'تم إرسال رابط استعادة كلمة المرور إذا كان البريد مسجلًا. افحص صندوق الوارد والرسائل غير المرغوب فيها.','success')}catch(e){notice(document.getElementById('modalNotice'),translateError(e.message),'error')}}
 supabaseClient.auth.onAuthStateChange(async(event,session)=>{if(session&&session.user){currentUser=session.user;await afterLogin()}else{currentUser=null;setSignedOut()}});
 (async()=>{renderLessons();renderSentences();try{const {data}=await supabaseClient.auth.getSession();if(data.session){currentUser=data.session.user;await afterLogin()}}catch(e){showGlobal('تعذر الاتصال بخدمة الحسابات. راجع إعدادات Supabase والمفتاح العام.','error')}})();
+  
+async function loadSubscriptionRequests() {
+  const list = document.getElementById('subscriptionRequestsList');
+  const notice = document.getElementById('subscriptionRequestsNotice');
+
+  if (!currentUser) {
+    notice.textContent = 'سجّل الدخول أولًا.';
+    notice.classList.remove('hidden');
+    return;
+  }
+
+  list.textContent = 'جاري تحميل الطلبات...';
+  notice.classList.add('hidden');
+
+  const { data: admin, error: adminError } = await supabaseClient
+    .from('admin_users')
+    .select('user_id')
+    .eq('user_id', currentUser.id)
+    .maybeSingle();
+
+  if (adminError || !admin) {
+    list.textContent = 'لا يمكن عرض الطلبات: تأكد من صلاحيات المدير.';
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from('subscription_requests')
+    .select('id, user_id, plan, amount, payment_method, transaction_reference, status, created_at')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    list.textContent = 'تعذر تحميل الطلبات. راجع صلاحيات قاعدة البيانات.';
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    list.textContent = 'لا توجد طلبات اشتراك حتى الآن.';
+    return;
+  }
+
+  list.replaceChildren();
+
+  data.forEach(function (r) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.marginBottom = '12px';
+
+    const details = document.createElement('p');
+    details.textContent =
+      'الخطة: ' + (r.plan === 'annual' ? 'سنوي' : r.plan === 'monthly' ? 'شهري' : r.plan) +
+      ' | المبلغ: ' + r.amount + ' جنيه' +
+      ' | طريقة الدفع: ' + r.payment_method +
+      ' | رقم العملية: ' + r.transaction_reference +
+      ' | الحالة: ' + r.status +
+      ' | تاريخ الطلب: ' + new Date(r.created_at).toLocaleString('ar-EG');
+
+    card.appendChild(details);
+
+    if (r.status === 'pending') {
+      ['approved', 'rejected'].forEach(function (decision) {
+        const button = document.createElement('button');
+        button.className = decision === 'approved' ? 'primary' : 'ghost';
+        button.style.margin = '4px';
+        button.textContent = decision === 'approved' ? 'قبول الاشتراك' : 'رفض الطلب';
+        button.addEventListener('click', function () {
+          reviewSubscriptionRequest(r.id, decision);
+        });
+        card.appendChild(button);
+      });
+    }
+
+    list.appendChild(card);
+  });
+}
+
+async function reviewSubscriptionRequest(requestId, decision) {
+  if (decision !== 'approved' && decision !== 'rejected') return;
+
+  const message = decision === 'approved'
+    ? 'هل تحققت من وصول المبلغ الحقيقي وتريد تفعيل الاشتراك؟'
+    : 'هل تريد رفض طلب الاشتراك؟';
+
+  if (!confirm(message)) return;
+
+  const { data: admin, error: adminError } = await supabaseClient
+    .from('admin_users')
+    .select('user_id')
+    .eq('user_id', currentUser.id)
+    .maybeSingle();
+
+  if (adminError || !admin) {
+    alert('ليس لديك صلاحية لتنفيذ هذا الإجراء.');
+    return;
+  }
+
+  const { data, error } = await supabaseClient.rpc(
+    'fima_review_subscription_request',
+    {
+      p_request_id: requestId,
+      p_decision: decision
+    }
+  );
+
+  if (error) {
+    alert('لم تتم مراجعة الطلب: ' + error.message);
+    return;
+  }
+
+  alert(data || 'تمت مراجعة الطلب.');
+  await loadSubscriptionRequests();
+}
+
 </script>
 </body></html>
