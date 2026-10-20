@@ -17,6 +17,37 @@
 <section class="hero"><div><span class="pill">ابدأ من مستواك</span><h1>الإنجليزي أبسط<br>مع <span style="color:var(--blue)">فيما</span></h1><p>اتعلم خطوة بخطوة، تدرب على الكلمات والقواعد، واختبر تقدمك في مكان واحد.</p><div class="row"><button class="primary" onclick="document.getElementById('lessons').scrollIntoView({behavior:'smooth'})">ابدأ التعلم</button><button class="secondary" onclick="openAuth('signup')">أنشئ حسابًا مجانًا</button></div><p class="small muted" style="margin-top:12px">دروس قصيرة • اختبارات • متابعة للتقدم</p></div><div class="hero-card"><span class="pill">خطوتك الأولى</span><h2>كل يوم كلمة جديدة</h2><p>الاستمرار أهم من السرعة. ابدأ بدرس واحد، وارجع كل يوم لتكمل رحلتك.</p><div class="progressbar"><span style="width:32%"></span></div><p class="small">Learn • Practice • Improve</p></div></section>
 <div id="globalNotice" class="notice hidden"></div>
 <section class="section" id="lessons"><div class="row between"><h2>دروس المستوى المبتدئ</h2><span class="muted small" id="lessonCount">6 دروس</span></div><div class="grid" id="lessonGrid"></div></section>
+  <section class="section" id="levels">
+  <h2>المستويات المدفوعة</h2>
+  <p class="muted">اختار المستوى المناسب ليك، وكل مستوى له اشتراك مستقل.</p>
+  <div class="grid">
+    <article class="card">
+      <h3>المستوى A1</h3>
+      <p>مستوى المبتدئين.</p>
+      <button class="primary" onclick="showGlobal('سيتم تفعيل الاشتراك في A1 قريبًا')">اشترك في A1</button>
+    </article>
+    <article class="card">
+      <h3>المستوى A2</h3>
+      <p>تطوير مهارات اللغة الإنجليزية.</p>
+      <button class="primary" onclick="showGlobal('سيتم تفعيل الاشتراك في A2 قريبًا')">اشترك في A2</button>
+    </article>
+    <article class="card">
+      <h3>المستوى B1</h3>
+      <p>المستوى المتوسط.</p>
+      <button class="primary" onclick="showGlobal('سيتم تفعيل الاشتراك في B1 قريبًا')">اشترك في B1</button>
+    </article>
+    <article class="card">
+      <h3>المستوى B2</h3>
+      <p>تطوير اللغة للمستوى فوق المتوسط.</p>
+      <button class="primary" onclick="showGlobal('سيتم تفعيل الاشتراك في B2 قريبًا')">اشترك في B2</button>
+    </article>
+    <article class="card">
+      <h3>المستوى C1</h3>
+      <p>المستوى المتقدم.</p>
+      <button class="primary" onclick="showGlobal('سيتم تفعيل الاشتراك في C1 قريبًا')">اشترك في C1</button>
+    </article>
+  </div>
+  </section>
 <section class="section" id="pricing"><h2>خطط الاشتراك</h2><p class="muted">ابدأ رحلتك مع فيما، واختر الخطة المناسبة لك.</p><div class="grid"><article class="price-card"><span class="pill">مرونة شهرية</span><h3>الاشتراك الشهري</h3><div class="price">199 <span style="font-size:15px">جنيه / شهر</span></div><p class="muted">وصول للمحتوى المدفوع طوال مدة الاشتراك بعد تأكيد الدفع.</p><button class="primary full" onclick="requestSubscription('monthly')">اشترك شهريًا</button></article><article class="price-card featured"><span class="pill">أفضل قيمة</span><h3>الاشتراك السنوي</h3><div class="price">1,450 <span style="font-size:15px">جنيه / سنة</span></div><p class="muted">وفّر 938 جنيهًا مقارنة بالدفع الشهري لمدة 12 شهرًا.</p><button class="primary full" onclick="requestSubscription('annual')">اشترك سنويًا</button></article><article class="price-card"><h3>طرق الدفع</h3><p>إنستاباي أو تحويل بنكي مع مراجعة يدوية، ويمكن إضافة بوابة دفع إلكترونية بعد تفعيل حساب التاجر.</p><p class="small muted">لن يتم تفعيل الاشتراك إلا بعد التحقق من الدفع. بيانات الاستقبال ستضاف بعد ضبطها من المالك.</p></article></div><div id="subscriptionNotice" class="notice hidden"></div></section>
 <section class="section" id="sentences"><div class="row between"><h2>100 جملة للتعارف والحياة اليومية</h2><span class="muted small">مع الترجمة والاستماع</span></div><p class="muted">ابحث في الجمل أو استمع إلى النطق الإنجليزي.</p><input id="sentenceSearch" placeholder="ابحث بالإنجليزية أو العربية..." oninput="renderSentences()" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;margin-bottom:12px"><div class="sentence-list" id="sentenceList"></div></section>
 <section class="section"><div class="card"><h2>رحلتك في التعلم</h2><p class="muted">سجّل الدخول لحفظ تقدمك والوصول إلى صفحة حسابك من أي وقت.</p><button class="primary" onclick="openAuth('signup')">إنشاء حساب جديد</button></div></section>
