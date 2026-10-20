@@ -602,7 +602,7 @@ async function adminAddLesson(){
     document.getElementById('lessonContentInput').value='';
     document.getElementById('lessonPublishInput').checked=false;
   }catch(err){
-    notice(n,translateError(err.message||'تعذر إضافة الدرس.'),'error');
+    notice(n,'خطأ تفصيلي: '+(err.message||JSON.stringify(err)),'error');
   }
 }
 
