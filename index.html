@@ -24,27 +24,27 @@
     <article class="card">
       <h3>المستوى A1</h3>
       <p>مستوى المبتدئين.</p>
-      <button class="primary" onclick="showGlobal('سيتم تفعيل الاشتراك في A1 قريبًا')">اشترك في A1</button>
+      <button class="primary" onclick="requestSubscription('A1')">اشترك في A1</button>
     </article>
     <article class="card">
       <h3>المستوى A2</h3>
       <p>تطوير مهارات اللغة الإنجليزية.</p>
-      <button class="primary" onclick="showGlobal('سيتم تفعيل الاشتراك في A2 قريبًا')">اشترك في A2</button>
+      <button class="primary" onclick="requestSubscription('A2')">اشترك في A2</button>
     </article>
     <article class="card">
       <h3>المستوى B1</h3>
       <p>المستوى المتوسط.</p>
-      <button class="primary" onclick="showGlobal('سيتم تفعيل الاشتراك في B1 قريبًا')">اشترك في B1</button>
+      <button class="primary" onclick="requestSubscription('B1')">اشترك في B1</button>
     </article>
     <article class="card">
       <h3>المستوى B2</h3>
       <p>تطوير اللغة للمستوى فوق المتوسط.</p>
-      <button class="primary" onclick="showGlobal('سيتم تفعيل الاشتراك في B2 قريبًا')">اشترك في B2</button>
+      <button class="primary" onclick="requestSubscription('B2')">اشترك في B2</button>
     </article>
     <article class="card">
       <h3>المستوى C1</h3>
       <p>المستوى المتقدم.</p>
-      <button class="primary" onclick="showGlobal('سيتم تفعيل الاشتراك في C1 قريبًا')">اشترك في C1</button>
+      <button class="primary" onclick="requestSubscription('C1')">اشترك في C1</button>
     </article>
   </div>
   </section>
@@ -103,52 +103,58 @@ function renderSentences(){const box=document.getElementById('sentenceList');if(
 async function requestSubscription(plan) {
   const n = document.getElementById('subscriptionNotice');
 
+  const levels = {
+    A1: { label: 'A1', amount: 199 },
+    A2: { label: 'A2', amount: 199 },
+    B1: { label: 'B1', amount: 199 },
+    B2: { label: 'B2', amount: 199 },
+    C1: { label: 'C1', amount: 199 },
+    monthly: { label: 'الاشتراك الشهري القديم', amount: 199 },
+    annual: { label: 'الاشتراك السنوي القديم', amount: 1450 }
+  };
+
   if (!currentUser) {
     openAuth('login');
     notice(n, 'سجّل الدخول أولًا، ثم اختر الاشتراك.', 'error');
     return;
   }
 
-  if (plan !== 'monthly' && plan !== 'annual') {
-    notice(n, 'خطة الاشتراك غير صحيحة.', 'error');
+  const selected = levels[plan];
+
+  if (!selected) {
+    notice(n, 'المستوى غير صحيح.', 'error');
     return;
   }
 
-  const label = plan === 'annual' ? 'سنوي' : 'شهري';
-  const amount = plan === 'annual' ? 1450 : 199;
-
   const choice = prompt(
-    'اختر طريقة الدفع بكتابة أحد الخيارين فقط:\n1- InstaPay\n2- تحويل بنكي'
+    'اشتراك المستوى ' + selected.label +
+    '\nقيمة الاشتراك: ' + selected.amount +
+    ' جنيه\n\nاكتب طريقة الدفع:\n1- InstaPay\n2- تحويل بنكي'
   );
 
   if (choice === null) return;
 
   const normalized = choice.trim().toLowerCase();
-
   let method;
 
-  if (['instapay', 'انستاباي', 'إنستاباي'].includes(normalized)) {
+  if (['1', 'instapay', 'انستاباي', 'إنستاباي'].includes(normalized)) {
     method = 'InstaPay';
   } else if (
-    ['تحويل بنكي', 'bank transfer', 'bank'].includes(normalized)
+    ['2', 'تحويل بنكي', 'bank transfer', 'bank'].includes(normalized)
   ) {
     method = 'تحويل بنكي';
   } else {
-    notice(
-      n,
-      'طريقة الدفع غير صحيحة. اكتب InstaPay أو تحويل بنكي.',
-      'error'
-    );
+    notice(n, 'اكتب InstaPay أو تحويل بنكي.', 'error');
     return;
   }
 
   const reference = prompt(
-    'اكتب رقم العملية أو مرجع التحويل بعد إتمام الدفع. لن يتفعّل الاشتراك إلا بعد مراجعة المدير.'
+    'بعد إتمام الدفع، اكتب رقم العملية أو مرجع التحويل.'
   );
 
   if (reference === null) return;
 
-  if (!reference.trim() || reference.trim().length < 3) {
+  if (reference.trim().length < 3) {
     notice(n, 'اكتب مرجع عملية صحيحًا.', 'error');
     return;
   }
@@ -161,7 +167,7 @@ async function requestSubscription(plan) {
         plan: plan,
         payment_method: method,
         transaction_reference: reference.trim(),
-        amount: amount,
+        amount: selected.amount,
         status: 'pending'
       });
 
@@ -169,20 +175,22 @@ async function requestSubscription(plan) {
 
     notice(
       n,
-      'تم إرسال طلب الاشتراك ' + label + ' بقيمة ' +
-      amount + ' جنيه للمراجعة. انتظر تأكيد المدير.',
+      'تم إرسال طلب اشتراك المستوى ' + selected.label +
+      ' بقيمة ' + selected.amount +
+      ' جنيه. انتظر مراجعة المدير.',
       'success'
     );
   } catch (e) {
     console.error('Subscription request error:', e);
-
     notice(
       n,
-      'تعذر تسجيل الطلب في قاعدة البيانات. لم يتم تأكيد الاشتراك. راجع إعدادات قاعدة البيانات.',
+      'تعذر تسجيل الطلب. لم يتم تأكيد الاشتراك.',
       'error'
     );
   }
 }
+
+
 
 
 function openAuth(mode){authMode=mode;document.getElementById('modal').classList.remove('hidden');hideNotice(document.getElementById('modalNotice'));updateAuthMode()}
