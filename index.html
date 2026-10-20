@@ -345,6 +345,85 @@
   <div id="subscriptionRequestsList" style="margin-top:12px">
     اضغط على عرض طلبات الاشتراك.
   </div>
+ <div class="card" style="margin-top:20px">
+  <h3>إدارة الدروس والفيديوهات</h3>
+  <p class="muted">أضف درسًا جديدًا للمستوى المطلوب.</p>
+
+  <label for="lessonLevel">المستوى</label>
+  <select id="lessonLevel" style="width:100%;padding:11px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px">
+    <option value="A1">A1</option>
+    <option value="A2">A2</option>
+    <option value="B1">B1</option>
+    <option value="B2">B2</option>
+    <option value="C1">C1</option>
+  </select>
+
+  <label for="lessonTitleInput">عنوان الدرس</label>
+  <input id="lessonTitleInput" placeholder="مثال: Greetings" style="width:100%;padding:11px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px">
+
+  <label for="lessonDescriptionInput">وصف الدرس</label>
+  <input id="lessonDescriptionInput" placeholder="وصف مختصر للدرس" style="width:100%;padding:11px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px">
+
+  <label for="lessonVideoInput">رابط الفيديو</label>
+  <input id="lessonVideoInput" type="url" placeholder="https://..." style="width:100%;padding:11px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px">
+
+  <label for="lessonContentInput">شرح الدرس أو محتواه</label>
+  <textarea id="lessonContentInput" rows="4" placeholder="اكتب الشرح هنا" style="width:100%;padding:11px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px"></textarea>
+
+  <label for="lessonOrderInput">ترتيب الدرس</label>
+  <input id="lessonOrderInput" type="number" min="1" value="1" style="width:100%;padding:11px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px">
+
+  <label style="display:block;margin:10px 0">
+    <input id="lessonPublishInput" type="checkbox">
+    نشر الدرس للطلاب
+  </label>
+
+  <button class="primary" onclick="adminAddLesson()">إضافة الدرس</button>
+  <div id="lessonAdminNotice" class="notice hidden" style="margin-top:12px"></div>
+</div>
+
+<div class="card" style="margin-top:20px">
+  <h3>إدارة أسئلة الامتحانات</h3>
+  <p class="muted">أضف سؤال اختيار من متعدد للمستوى المحدد.</p>
+
+  <label for="examLevel">المستوى</label>
+  <select id="examLevel" style="width:100%;padding:11px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px">
+    <option value="A1">A1</option>
+    <option value="A2">A2</option>
+    <option value="B1">B1</option>
+    <option value="B2">B2</option>
+    <option value="C1">C1</option>
+  </select>
+
+  <label for="examQuestionInput">السؤال</label>
+  <textarea id="examQuestionInput" rows="2" placeholder="اكتب السؤال" style="width:100%;padding:11px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px"></textarea>
+
+  <label for="examOptionA">الاختيار A</label>
+  <input id="examOptionA" placeholder="الاختيار الأول" style="width:100%;padding:11px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px">
+
+  <label for="examOptionB">الاختيار B</label>
+  <input id="examOptionB" placeholder="الاختيار الثاني" style="width:100%;padding:11px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px">
+
+  <label for="examOptionC">الاختيار C</label>
+  <input id="examOptionC" placeholder="الاختيار الثالث" style="width:100%;padding:11px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px">
+
+  <label for="examOptionD">الاختيار D</label>
+  <input id="examOptionD" placeholder="الاختيار الرابع" style="width:100%;padding:11px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px">
+
+  <label for="examCorrectOption">الإجابة الصحيحة</label>
+  <select id="examCorrectOption" style="width:100%;padding:11px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px">
+    <option value="A">A</option>
+    <option value="B">B</option>
+    <option value="C">C</option>
+    <option value="D">D</option>
+  </select>
+
+  <label for="examOrderInput">ترتيب السؤال</label>
+  <input id="examOrderInput" type="number" min="1" value="1" style="width:100%;padding:11px;margin:8px 0;border:1px solid #cbd5e1;border-radius:10px">
+
+  <button class="primary" onclick="adminAddExamQuestion()">إضافة السؤال</button>
+  <div id="examAdminNotice" class="notice hidden" style="margin-top:12px"></div>
+</div>
 </div></div></section>
 </main><footer class="footer"><div class="wrap">فيما FIMA English © <span id="year"></span> — اتعلم الإنجليزي ببساطة • Learn English. Live Confidently.</div></footer>
 <div id="modal" class="modal hidden" role="dialog" aria-modal="true"><div class="modalbox"><div class="row between"><h2 id="modalTitle">تسجيل الدخول</h2><button class="ghost" onclick="closeModal()" aria-label="إغلاق">✕</button></div><div id="modalNotice" class="notice hidden"></div><form id="authForm"><div class="field hidden" id="nameField"><label for="fullName">الاسم</label><input id="fullName" autocomplete="name" placeholder="اسمك"></div><div class="field"><label for="email">البريد الإلكتروني</label><input id="email" type="email" autocomplete="email" required placeholder="name@example.com"></div><div class="field"><label for="password">كلمة المرور</label><input id="password" type="password" autocomplete="current-password" minlength="8" required placeholder="8 أحرف على الأقل"></div><button class="primary full" id="authSubmit" type="submit">دخول</button></form><div class="row between" style="margin-top:12px"><button class="secondary" id="switchAuth" onclick="switchAuthMode()">إنشاء حساب جديد</button><button class="ghost small" onclick="forgotPassword()">نسيت كلمة المرور؟</button></div><p class="small muted">إنشاء الحساب قد يتطلب تأكيد البريد الإلكتروني.</p></div></div>
