@@ -17,37 +17,104 @@
 <section class="hero"><div><span class="pill">ابدأ من مستواك</span><h1>الإنجليزي أبسط<br>مع <span style="color:var(--blue)">فيما</span></h1><p>اتعلم خطوة بخطوة، تدرب على الكلمات والقواعد، واختبر تقدمك في مكان واحد.</p><div class="row"><button class="primary" onclick="document.getElementById('lessons').scrollIntoView({behavior:'smooth'})">ابدأ التعلم</button><button class="secondary" onclick="openAuth('signup')">أنشئ حسابًا مجانًا</button></div><p class="small muted" style="margin-top:12px">دروس قصيرة • اختبارات • متابعة للتقدم</p></div><div class="hero-card"><span class="pill">خطوتك الأولى</span><h2>كل يوم كلمة جديدة</h2><p>الاستمرار أهم من السرعة. ابدأ بدرس واحد، وارجع كل يوم لتكمل رحلتك.</p><div class="progressbar"><span style="width:32%"></span></div><p class="small">Learn • Practice • Improve</p></div></section>
 <div id="globalNotice" class="notice hidden"></div>
 <section class="section" id="lessons"><div class="row between"><h2>دروس المستوى المبتدئ</h2><span class="muted small" id="lessonCount">6 دروس</span></div><div class="grid" id="lessonGrid"></div></section>
-  <section class="section" id="levels">
-  <h2>المستويات المدفوعة</h2>
-  <p class="muted">اختار المستوى المناسب ليك، وكل مستوى له اشتراك مستقل.</p>
-  <div class="grid">
-    <article class="card">
-      <h3>المستوى A1</h3>
-      <p>مستوى المبتدئين.</p>
-      <button class="primary" onclick="requestSubscription('A1')">اشترك في A1</button>
-    </article>
-    <article class="card">
-      <h3>المستوى A2</h3>
-      <p>تطوير مهارات اللغة الإنجليزية.</p>
-      <button class="primary" onclick="requestSubscription('A2')">اشترك في A2</button>
-    </article>
-    <article class="card">
-      <h3>المستوى B1</h3>
-      <p>المستوى المتوسط.</p>
-      <button class="primary" onclick="requestSubscription('B1')">اشترك في B1</button>
-    </article>
-    <article class="card">
-      <h3>المستوى B2</h3>
-      <p>تطوير اللغة للمستوى فوق المتوسط.</p>
-      <button class="primary" onclick="requestSubscription('B2')">اشترك في B2</button>
-    </article>
-    <article class="card">
-      <h3>المستوى C1</h3>
-      <p>المستوى المتقدم.</p>
-      <button class="primary" onclick="requestSubscription('C1')">اشترك في C1</button>
-    </article>
+  
+<section class="section" id="levels">
+  <div class="levels-heading">
+    <span class="levels-tag">FIMA ENGLISH</span>
+    <h2>اختار مستواك وابدأ رحلتك</h2>
+    <p class="muted">كل مستوى بتشتريه مرة واحدة، وتحتفظ بإمكانية الوصول إليه بعد تفعيله.</p>
   </div>
-  </section>
+
+  <div class="levels-grid">
+
+    <article class="level-card level-a1">
+      <div class="level-top">
+        <span class="level-label">BEGINNER</span>
+        <span class="level-number">01</span>
+      </div>
+      <h3>A1</h3>
+      <h4>المستوى التأسيسي</h4>
+      <p>ابدأ من الصفر وتعلّم تكوين الجمل والتعريف بنفسك والمحادثات اليومية.</p>
+      <div class="level-features">
+        <span>القواعد الأساسية</span>
+        <span>المفردات والنطق</span>
+        <span>تدريبات واختبارات</span>
+      </div>
+      <div class="level-price">300 <small>جنيه</small></div>
+      <button class="primary full" onclick="requestSubscription('A1')">اشترك في A1</button>
+    </article>
+
+    <article class="level-card level-a2">
+      <div class="level-top">
+        <span class="level-label">ELEMENTARY</span>
+        <span class="level-number">02</span>
+      </div>
+      <h3>A2</h3>
+      <h4>المستوى الابتدائي</h4>
+      <p>طوّر قدرتك على فهم المحادثات والتعبير عن احتياجاتك ومواقف الحياة اليومية.</p>
+      <div class="level-features">
+        <span>قواعد ومفردات جديدة</span>
+        <span>الاستماع والمحادثة</span>
+        <span>تدريبات واختبارات</span>
+      </div>
+      <div class="level-price">350 <small>جنيه</small></div>
+      <button class="primary full" onclick="requestSubscription('A2')">اشترك في A2</button>
+    </article>
+
+    <article class="level-card level-b1">
+      <div class="level-top">
+        <span class="level-label">INTERMEDIATE</span>
+        <span class="level-number">03</span>
+      </div>
+      <h3>B1</h3>
+      <h4>المستوى المتوسط</h4>
+      <p>تحدث بثقة أكبر، واحكِ عن تجاربك وافهم النصوص والمواقف المعتادة.</p>
+      <div class="level-features">
+        <span>تطوير الطلاقة</span>
+        <span>القراءة والكتابة</span>
+        <span>تطبيقات عملية</span>
+      </div>
+      <div class="level-price">650 <small>جنيه</small></div>
+      <button class="primary full" onclick="requestSubscription('B1')">اشترك في B1</button>
+    </article>
+
+    <article class="level-card level-b2">
+      <div class="level-top">
+        <span class="level-label">UPPER INTERMEDIATE</span>
+        <span class="level-number">04</span>
+      </div>
+      <h3>B2</h3>
+      <h4>فوق المتوسط</h4>
+      <p>حسّن طلاقتك وافهم محتوى أكثر تعقيدًا، وعبّر عن أفكارك بتفصيل.</p>
+      <div class="level-features">
+        <span>محادثات متقدمة</span>
+        <span>فهم النصوص</span>
+        <span>تدريبات تطبيقية</span>
+      </div>
+      <div class="level-price">800 <small>جنيه</small></div>
+      <button class="primary full" onclick="requestSubscription('B2')">اشترك في B2</button>
+    </article>
+
+    <article class="level-card level-c1">
+      <div class="level-top">
+        <span class="level-label">ADVANCED</span>
+        <span class="level-number">05</span>
+      </div>
+      <h3>C1</h3>
+      <h4>المستوى المتقدم</h4>
+      <p>ارتقِ بفهمك للإنجليزية واستخدمها بمرونة في النقاشات والمواقف المعقدة.</p>
+      <div class="level-features">
+        <span>لغة متقدمة</span>
+        <span>التعبير الدقيق</span>
+        <span>تدريبات متخصصة</span>
+      </div>
+      <div class="level-price">1000 <small>جنيه</small></div>
+      <button class="primary full" onclick="requestSubscription('C1')">اشترك في C1</button>
+    </article>
+
+  </div>
+</section>
+
 
 <section class="section" id="sentences"><div class="row between"><h2>100 جملة للتعارف والحياة اليومية</h2><span class="muted small">مع الترجمة والاستماع</span></div><p class="muted">ابحث في الجمل أو استمع إلى النطق الإنجليزي.</p><input id="sentenceSearch" placeholder="ابحث بالإنجليزية أو العربية..." oninput="renderSentences()" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;margin-bottom:12px"><div class="sentence-list" id="sentenceList"></div></section>
 <section class="section"><div class="card"><h2>رحلتك في التعلم</h2><p class="muted">سجّل الدخول لحفظ تقدمك والوصول إلى صفحة حسابك من أي وقت.</p><button class="primary" onclick="openAuth('signup')">إنشاء حساب جديد</button></div></section>
