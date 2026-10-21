@@ -1156,7 +1156,7 @@ async function openPaidLevel(level) {
     if (!isAdmin) {
       const { data: subscription, error: subError } = await supabaseClient
         .from('subscriptions')
-        .select('id')
+        .select('user_id')
         .eq('user_id', currentUser.id)
         .eq('plan', level)
         .eq('status', 'active')
