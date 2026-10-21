@@ -1024,12 +1024,58 @@ async function openPaidLevel(level) {
 
       if (subError) throw subError;
 
+      
       if (!subscription || subscription.length === 0) {
-        description.textContent = 'هذا المستوى يحتاج إلى اشتراك فعّال.';
-        noticeBox.textContent = 'اشترك في المستوى أولًا، وبعد موافقة المدير ستتمكن من فتح دروسه.';
+        description.textContent = 'افتح محتوى المستوى بعد الاشتراك واعتماد طلبك.';
+
+        const subscriptionCard = document.getElementById('paidLevelSubscription');
+
+        const levelPrices = {
+          A1: 300,
+          A2: 350,
+          B1: 650,
+          B2: 800,
+          C1: 1000
+        };
+
+        subscriptionCard.innerHTML = `
+          <div class="paid-subscription-card">
+            <span class="paid-level-small-label">YOUR LEVEL MEMBERSHIP</span>
+            <h3>اشتراك المستوى ${level}</h3>
+            <p>افتح الدروس والفيديوهات والتدريبات والاختبار النهائي بعد اعتماد اشتراكك.</p>
+
+            <div class="paid-subscription-price">
+              <span class="paid-subscription-amount">${levelPrices[level]}</span>
+              <span class="paid-subscription-currency">جنيه مصري</span>
+            </div>
+
+            <ul class="paid-subscription-features">
+              <li>الدروس والفيديوهات الخاصة بالمستوى</li>
+              <li>التدريبات والتطبيق</li>
+              <li>الاختبار النهائي للمستوى</li>
+            </ul>
+
+            <button
+              type="button"
+              class="primary full paid-subscription-button"
+              onclick="requestSubscription('${level}')">
+              اشترك الآن
+            </button>
+
+            <p class="paid-subscription-footnote">
+              يتم فتح المحتوى بعد مراجعة طلب الدفع واعتماده من الإدارة.
+            </p>
+          </div>
+        `;
+
+        noticeBox.textContent = 'محتوى المستوى مقفول لحين تفعيل الاشتراك.';
         noticeBox.classList.remove('hidden');
         return;
       }
+
+      const subscriptionCard = document.getElementById('paidLevelSubscription');
+      subscriptionCard.innerHTML = '';
+
 
       if (level !== 'A1') {
         const previousLevel = {
