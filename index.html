@@ -330,7 +330,17 @@
 
   </div>
 </section>
-
+ 
+<section class="section hidden" id="paidLevelSection">
+  <div class="row between">
+    <h2 id="paidLevelTitle">دروس المستوى</h2>
+    <button class="secondary" onclick="closePaidLevel()">رجوع للمستويات</button>
+  </div>
+  <p id="paidLevelDescription" class="muted">دروس المستوى والامتحان النهائي.</p>
+  <div id="paidLevelNotice" class="notice hidden"></div>
+  <div id="paidLessonsList" class="lesson-grid"></div>
+  <div id="paidLevelExam" class="hidden"></div>
+</section>
 
 <section class="section" id="sentences"><div class="row between"><h2>100 جملة للتعارف والحياة اليومية</h2><span class="muted small">مع الترجمة والاستماع</span></div><p class="muted">ابحث في الجمل أو استمع إلى النطق الإنجليزي.</p><input id="sentenceSearch" placeholder="ابحث بالإنجليزية أو العربية..." oninput="renderSentences()" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;margin-bottom:12px"><div class="sentence-list" id="sentenceList"></div></section>
 <section class="section"><div class="card"><h2>رحلتك في التعلم</h2><p class="muted">سجّل الدخول لحفظ تقدمك والوصول إلى صفحة حسابك من أي وقت.</p><button class="primary" onclick="openAuth('signup')">إنشاء حساب جديد</button></div></section>
@@ -550,7 +560,183 @@ async function requestSubscription(plan) {
   }
 }
 
+async function openPaidLevel(level) {
+  const section = document.getElementById('paidLevelSection');
+  const title = document.getElementById('paidLevelTitle');
+  const description = document.getElementById('paidLevelDescription');
+  const list = document.getElementById('paidLessonsList');
+  const exam = document.getElementById('paidLevelExam');
+  const noticeBox = document.getElementById('paidLevelNotice');
 
+  const validLevels = ['A1', 'A2', 'B1', 'B2', 'C1'];
+
+  if (!validLevels.includes(level)) {
+    alert('المستوى غير صحيح.');
+    return;
+  }
+
+  if (!currentUser) {
+    openAuth('login');
+    alert('سجّل الدخول أولًا.');
+    return;
+  }
+
+  section.classList.remove('hidden');
+  section.scrollIntoView({ behavior: 'smooth' });
+  title.textContent = 'المستوى ' + level;
+  description.textContent = 'جارٍ تحميل الدروس...';
+  list.innerHTML = '';
+  exam.innerHTML = '';
+  exam.classList.add('hidden');
+  noticeBox.classList.add('hidden');
+
+  try {
+    const { data: adminData, error: adminError } = await supabaseClient
+      .from('admin_users')
+      .select('user_id')
+      .eq('user_id', currentUser.id)
+      .maybeSingle();
+
+    if (adminError) throw adminError;
+
+    const isAdmin = !!adminData;
+
+    if (!isAdmin) {
+      const { data: subscription, error: subError } = await supabaseClient
+        .from('subscriptions')
+        .select('id')
+        .eq('user_id', currentUser.id)
+        .eq('plan', level)
+        .eq('status', 'active')
+        .limit(1);
+
+      if (subError) throw subError;
+
+      if (!subscription || subscription.length === 0) {
+        description.textContent = 'هذا المستوى يحتاج إلى اشتراك فعّال.';
+        noticeBox.textContent = 'اشترك في المستوى أولًا، وبعد موافقة المدير ستتمكن من فتح دروسه.';
+        noticeBox.classList.remove('hidden');
+        return;
+      }
+
+      if (level !== 'A1') {
+        const previousLevel = {
+          A2: 'A1',
+          B1: 'A2',
+          B2: 'B1',
+          C1: 'B2'
+        }[level];
+
+        const { data: progress, error: progressError } = await supabaseClient
+          .from('student_level_progress')
+          .select('exam_score, exam_passed')
+          .eq('user_id', currentUser.id)
+          .eq('level_code', previousLevel)
+          .maybeSingle();
+
+        if (progressError) throw progressError;
+
+        if (!progress || progress.exam_passed !== true ||
+            Number(progress.exam_score) < 75) {
+          description.textContent = 'يجب اجتياز المستوى السابق أولًا.';
+          noticeBox.textContent =
+            'لا يمكنك فتح ' + level +
+            ' قبل النجاح في ' + previousLevel + ' بنسبة 75% على الأقل.';
+          noticeBox.classList.remove('hidden');
+          return;
+        }
+      }
+    }
+
+    const { data: lessonsData, error: lessonsError } = await supabaseClient
+      .from('level_lessons')
+      .select('id, title, description, video_url, content, sort_order')
+      .eq('level_code', level)
+      .eq('is_published', true)
+      .order('sort_order', { ascending: true });
+
+    if (lessonsError) throw lessonsError;
+
+    if (!lessonsData || lessonsData.length === 0) {
+      description.textContent = 'لا توجد دروس منشورة في هذا المستوى حتى الآن.';
+      return;
+    }
+
+    description.textContent = 'دروس المستوى ' + level;
+
+    lessonsData.forEach((lesson) => {
+      const card = document.createElement('article');
+      card.className = 'level-card';
+
+      const heading = document.createElement('h3');
+      heading.textContent = lesson.title;
+      card.appendChild(heading);
+
+      if (lesson.description) {
+        const desc = document.createElement('p');
+        desc.textContent = lesson.description;
+        card.appendChild(desc);
+      }
+
+      if (lesson.content) {
+        const content = document.createElement('p');
+        content.textContent = lesson.content;
+        card.appendChild(content);
+      }
+
+      if (lesson.video_url) {
+        const videoLink = document.createElement('a');
+        videoLink.href = lesson.video_url;
+        videoLink.target = '_blank';
+        videoLink.rel = 'noopener noreferrer';
+        videoLink.textContent = 'مشاهدة فيديو الدرس';
+        card.appendChild(videoLink);
+      }
+
+      const completeButton = document.createElement('button');
+      completeButton.className = 'primary full';
+      completeButton.textContent = 'علّم الدرس كمكتمل';
+      completeButton.onclick = () => completePaidLesson(lesson.id, level);
+      card.appendChild(completeButton);
+
+      list.appendChild(card);
+    });
+
+  } catch (error) {
+    console.error('Open paid level error:', error);
+    description.textContent = 'تعذر تحميل المستوى.';
+    noticeBox.textContent = 'حصل خطأ أثناء تحميل المستوى. حاول مرة أخرى.';
+    noticeBox.classList.remove('hidden');
+  }
+   }
+ async function completePaidLesson(lessonId, level) {
+  try {
+    const { data, error } = await supabaseClient.rpc(
+      'fima_complete_lesson',
+      { p_lesson_id: lessonId }
+    );
+
+    if (error) throw error;
+
+    if (!data || data.success !== true) {
+      alert(data?.message || 'تعذر تسجيل إكمال الدرس.');
+      return;
+    }
+
+    alert(
+      'تم تسجيل إكمال الدرس.\n' +
+      'الدروس المكتملة: ' + data.completed_lessons +
+      ' من ' + data.total_lessons
+    );
+
+    if (data.all_lessons_completed) {
+      alert('أكملت جميع دروس المستوى. الخطوة التالية هي تجهيز الامتحان.');
+    }
+  } catch (error) {
+    console.error('Complete lesson error:', error);
+    alert('تعذر تسجيل إكمال الدرس. حاول مرة أخرى.');
+  }
+ }
 
 
 function openAuth(mode){authMode=mode;document.getElementById('modal').classList.remove('hidden');hideNotice(document.getElementById('modalNotice'));updateAuthMode()}
