@@ -896,8 +896,8 @@
 
 <section class="section" id="sentences"><div class="row between"><h2>100 جملة للتعارف والحياة اليومية</h2><span class="muted small">مع الترجمة والاستماع</span></div><p class="muted">ابحث في الجمل أو استمع إلى النطق الإنجليزي.</p><input id="sentenceSearch" placeholder="ابحث بالإنجليزية أو العربية..." oninput="renderSentences()" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;margin-bottom:12px"><div class="sentence-list" id="sentenceList"></div></section>
 <section class="section"><div class="card"><h2>رحلتك في التعلم</h2><p class="muted">سجّل الدخول لحفظ تقدمك والوصول إلى صفحة حسابك من أي وقت.</p><button class="primary" onclick="openAuth('signup')">إنشاء حساب جديد</button></div></section>
-<section id="accountSection" class="section hidden"><div class="row between"><h2>حسابي</h2><button class="ghost" onclick="hidePanels()">إغلاق</button></div><div class="card"><h3 id="accountName">حساب الطالب</h3><p id="accountEmail" class="muted"></p><div class="stats"><div class="stat"><strong id="statDone">0</strong><span class="small">دروس مكتملة</span></div><div class="stat"><strong id="statTotal">6</strong><span class="small">إجمالي الدروس</span></div><div class="stat"><strong id="statPercent">0%</strong><span class="small">التقدم</span></div></div><div style="margin-top:18px"><div class="progressbar"><span id="accountProgress"></span></div></div></div></section>
-<section id="adminSection" class="section hidden"><div class="row between"><h2>لوحة المدير</h2><button class="ghost" onclick="hidePanels()">إغلاق</button></div><div class="card"><p class="muted">إدارة حسابات الطلاب المسجلة في المنصة.</p><div class="row"><input id="studentSearch" placeholder="ابحث بالبريد أو الاسم" style="flex:1;min-width:180px;padding:11px;border:1px solid #cbd5e1;border-radius:10px"><button class="primary" onclick="loadStudents()">بحث / تحديث</button></div><div id="adminNotice" class="notice hidden"></div><div class="tablewrap" style="margin-top:14px"><table><thead><tr><th>الاسم</th><th>البريد الإلكتروني</th><th>تاريخ التسجيل</th></tr></thead><tbody id="studentsBody"><tr><td colspan="3">اضغط تحديث لعرض الطلاب.</td></tr></tbody></table></div><p class="small muted">تعرض اللوحة بيانات الملفات الشخصية التي تسمح بها سياسات قاعدة البيانات، ولا تعرض كلمات المرور.</p><div class="card" style="margin-top:20px">
+<section id="accountSection" class="section hidden"><div class="row between"><h2>حسابي</h2><button class="ghost" onclick="hidePanels()">العودة للرئيسيه</button></div><div class="card"><h3 id="accountName">حساب الطالب</h3><p id="accountEmail" class="muted"></p><div class="stats"><div class="stat"><strong id="statDone">0</strong><span class="small">دروس مكتملة</span></div><div class="stat"><strong id="statTotal">6</strong><span class="small">إجمالي الدروس</span></div><div class="stat"><strong id="statPercent">0%</strong><span class="small">التقدم</span></div></div><div style="margin-top:18px"><div class="progressbar"><span id="accountProgress"></span></div></div></div></section>
+<section id="adminSection" class="section hidden"><div class="row between"><h2>لوحة المدير</h2><button class="ghost" onclick="hidePanels()">العودة للرئيسيه</button></div><div class="card"><p class="muted">إدارة حسابات الطلاب المسجلة في المنصة.</p><div class="row"><input id="studentSearch" placeholder="ابحث بالبريد أو الاسم" style="flex:1;min-width:180px;padding:11px;border:1px solid #cbd5e1;border-radius:10px"><button class="primary" onclick="loadStudents()">بحث / تحديث</button></div><div id="adminNotice" class="notice hidden"></div><div class="tablewrap" style="margin-top:14px"><table><thead><tr><th>الاسم</th><th>البريد الإلكتروني</th><th>تاريخ التسجيل</th></tr></thead><tbody id="studentsBody"><tr><td colspan="3">اضغط تحديث لعرض الطلاب.</td></tr></tbody></table></div><p class="small muted">تعرض اللوحة بيانات الملفات الشخصية التي تسمح بها سياسات قاعدة البيانات، ولا تعرض كلمات المرور.</p><div class="card" style="margin-top:20px">
   <h3>طلبات الاشتراك</h3>
   <p class="muted">مراجعة طلبات اشتراك المستويات التعليمية A1 وA2 وB1 وB2 وC1، وتفعيل المستوى بعد التحقق من الدفع.</p>
   <button class="primary" onclick="loadSubscriptionRequests()">
@@ -1370,10 +1370,75 @@ function setSignedOut(){document.getElementById('loginBtn').classList.remove('hi
 async function afterLogin(){if(!currentUser)return;document.getElementById('loginBtn').classList.add('hidden');document.getElementById('accountBtn').classList.remove('hidden');document.getElementById('logoutBtn').classList.remove('hidden');await updateAccount();await checkAdmin()}
 async function updateAccount(){if(!currentUser)return;const meta=currentUser.user_metadata||{};document.getElementById('accountName').textContent=meta.full_name||meta.name||'حساب الطالب';document.getElementById('accountEmail').textContent=currentUser.email||'';updateProgress()}
 function updateProgress(){const done=lessons.filter(l=>completed.has(l.id)).length;const pct=Math.round(done/lessons.length*100);document.getElementById('statDone').textContent=done;document.getElementById('statTotal').textContent=lessons.length;document.getElementById('statPercent').textContent=pct+'%';document.getElementById('accountProgress').style.width=pct+'%'}
-function showAccount(){hidePanels();document.getElementById('accountSection').classList.remove('hidden');updateAccount();document.getElementById('accountSection').scrollIntoView({behavior:'smooth'})}
-function hidePanels(){['accountSection','adminSection'].forEach(id=>document.getElementById(id).classList.add('hidden'))}
-async function checkAdmin(){const btn=document.getElementById('adminBtn');btn.classList.add('hidden');if(!currentUser)return;try{const {data,error}=await supabaseClient.from('admin_users').select('user_id').eq('user_id',currentUser.id).maybeSingle();if(!error&&data)btn.classList.remove('hidden')}catch(e){console.warn('Admin check failed',e)}}
-async function showAdmin(){hidePanels();document.getElementById('adminSection').classList.remove('hidden');document.getElementById('adminSection').scrollIntoView({behavior:'smooth'});await loadStudents()}
+function showAccount() {
+  hidePanels();
+
+  const home = document.getElementById('home');
+  const account = document.getElementById('accountSection');
+
+  home.classList.add('hidden');
+  account.classList.remove('hidden');
+  updateAccount();
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function hidePanels() {
+  ['accountSection', 'adminSection'].forEach(id => {
+    document.getElementById(id).classList.add('hidden');
+  });
+
+  document.getElementById('home').classList.remove('hidden');
+}
+
+async function checkAdmin() {
+  const btn = document.getElementById('adminBtn');
+  btn.classList.add('hidden');
+
+  if (!currentUser) return;
+
+  try {
+    const { data, error } = await supabaseClient
+      .from('admin_users')
+      .select('user_id')
+      .eq('user_id', currentUser.id)
+      .maybeSingle();
+
+    if (!error && data) {
+      btn.classList.remove('hidden');
+    }
+  } catch (e) {
+    console.warn('Admin check failed', e);
+  }
+}
+
+async function showAdmin() {
+  if (!currentUser) {
+    openAuth('login');
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from('admin_users')
+    .select('user_id')
+    .eq('user_id', currentUser.id)
+    .maybeSingle();
+
+  if (error || !data) {
+    alert('هذا الحساب ليس لديه صلاحية المدير.');
+    return;
+  }
+
+  hidePanels();
+
+  document.getElementById('home').classList.add('hidden');
+  document.getElementById('adminSection').classList.remove('hidden');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  await loadStudents();
+  await loadSubscriptionRequests();
+                                                                                                        }
 async function loadStudents(){const body=document.getElementById('studentsBody'),n=document.getElementById('adminNotice');body.innerHTML='<tr><td colspan="3">جارٍ التحميل…</td></tr>';hideNotice(n);if(!currentUser){notice(n,'سجّل الدخول أولًا.','error');return}try{const {data:admin,error:adminErr}=await supabaseClient.from('admin_users').select('user_id').eq('user_id',currentUser.id).maybeSingle();if(adminErr)throw adminErr;if(!admin){notice(n,'هذا الحساب غير مضاف كمدير في جدول admin_users. يلزم إضافته مرة واحدة من SQL Editor في Supabase.','error');body.innerHTML='<tr><td colspan="3">لا توجد صلاحية لعرض الطلاب.</td></tr>';return}let q=supabaseClient.from('profiles').select('*').order('created_at',{ascending:false}).limit(200);const {data,error}=await q;if(error)throw error;const term=(document.getElementById('studentSearch').value||'').trim().toLowerCase();const filtered=(data||[]).filter(p=>!term||String(p.full_name||p.name||'').toLowerCase().includes(term)||String(p.email||'').toLowerCase().includes(term));body.innerHTML='';if(!filtered.length){body.innerHTML='<tr><td colspan="3">لا توجد نتائج مطابقة.</td></tr>';return}filtered.forEach(p=>{const tr=document.createElement('tr');const name=p.full_name||p.name||'—';const email=p.email||'—';const created=p.created_at?new Date(p.created_at).toLocaleDateString('ar-EG'):'—';[name,email,created].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td)});body.appendChild(tr)})}catch(err){body.innerHTML='<tr><td colspan="3">تعذر تحميل الطلاب.</td></tr>';notice(n,translateError(err.message||'تعذر تحميل بيانات الطلاب. تأكد من إعداد الجداول وسياسات RLS.'),'error')}}
  
 async function adminAddLesson(){
