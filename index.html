@@ -1442,7 +1442,94 @@ function translateError(msg){if(/Invalid API key/i.test(msg))return 'مفتاح 
 async function logout(){await supabaseClient.auth.signOut();currentUser=null;setSignedOut();showGlobal('تم تسجيل الخروج.','success');hidePanels()}
 function setSignedOut(){document.getElementById('loginBtn').classList.remove('hidden');document.getElementById('accountBtn').classList.add('hidden');document.getElementById('adminBtn').classList.add('hidden');document.getElementById('logoutBtn').classList.add('hidden')}
 async function afterLogin(){if(!currentUser)return;document.getElementById('loginBtn').classList.add('hidden');document.getElementById('accountBtn').classList.remove('hidden');document.getElementById('logoutBtn').classList.remove('hidden');await updateAccount();await checkAdmin()}
-async function updateAccount(){if(!currentUser)return;const meta=currentUser.user_metadata||{};document.getElementById('accountName').textContent=meta.full_name||meta.name||'حساب الطالب';document.getElementById('accountEmail').textContent=currentUser.email||'';updateProgress()}
+async function updateAccount() {
+  if (!currentUser) return;
+
+  const meta = currentUser.user_metadata || {};
+
+  document.getElementById('accountName').textContent =
+    meta.full_name || meta.name || 'حساب الطالب';
+
+  document.getElementById('accountEmail').textContent =
+    currentUser.email || '';
+
+  updateProgress();
+
+  const levelElement = document.getElementById('accountLevel');
+  const statusElement = document.getElementById('accountSubscriptionStatus');
+  const startElement = document.getElementById('accountStartDate');
+  const endElement = document.getElementById('accountEndDate');
+  const messageElement = document.getElementById('accountSubscriptionMessage');
+
+  levelElement.textContent = '...';
+  statusElement.textContent = '...';
+  startElement.textContent = '—';
+  endElement.textContent = '—';
+  messageElement.textContent = 'جاري تحميل بيانات الاشتراك...';
+
+  const { data, error } = await supabaseClient
+    .from('subscriptions')
+    .select('plan, starts_at, expires_at, status')
+    .eq('user_id', currentUser.id)
+    .order('starts_at', { ascending: false });
+
+  if (error) {
+    levelElement.textContent = '—';
+    statusElement.textContent = 'غير متاح';
+    messageElement.textContent =
+      'تعذر تحميل بيانات الاشتراك. حاول مرة أخرى لاحقًا.';
+    return;
+  }
+
+  const subscriptions = data || [];
+  const activeSubscription = subscriptions.find(function (sub) {
+    return sub.status === 'active' &&
+      (!sub.expires_at || new Date(sub.expires_at) > new Date());
+  });
+
+  const pendingRequest = await supabaseClient
+    .from('subscription_requests')
+    .select('plan, status')
+    .eq('user_id', currentUser.id)
+    .eq('status', 'pending')
+    .limit(1);
+
+  if (activeSubscription) {
+    levelElement.textContent = activeSubscription.plan;
+
+    statusElement.textContent = 'نشط';
+
+    startElement.textContent = activeSubscription.starts_at
+      ? new Date(activeSubscription.starts_at).toLocaleDateString('ar-EG')
+      : '—';
+
+    endElement.textContent = activeSubscription.expires_at
+      ? new Date(activeSubscription.expires_at).toLocaleDateString('ar-EG')
+      : 'مفتوح حاليًا';
+
+    messageElement.textContent =
+      'اشتراكك في المستوى ' + activeSubscription.plan + ' مفعّل.';
+  } else if (pendingRequest.data && pendingRequest.data.length > 0) {
+    levelElement.textContent = pendingRequest.data[0].plan;
+    statusElement.textContent = 'قيد المراجعة';
+    messageElement.textContent =
+      'طلب اشتراكك وصل للإدارة ولسه مستني الموافقة.';
+  } else if (subscriptions.some(function (sub) {
+    return sub.status === 'active' &&
+      sub.expires_at &&
+      new Date(sub.expires_at) <= new Date();
+  })) {
+    levelElement.textContent = '—';
+    statusElement.textContent = 'منتهي';
+    messageElement.textContent =
+      'انتهت صلاحية اشتراكك. يمكنك مراجعة خيارات الاشتراك.';
+  } else {
+    levelElement.textContent = '—';
+    statusElement.textContent = 'غير مشترك';
+    messageElement.textContent =
+      'ليس لديك اشتراك مفعّل حاليًا. يمكنك اختيار المستوى المناسب.';
+  }
+     }
 function updateProgress(){const done=lessons.filter(l=>completed.has(l.id)).length;const pct=Math.round(done/lessons.length*100);document.getElementById('statDone').textContent=done;document.getElementById('statTotal').textContent=lessons.length;document.getElementById('statPercent').textContent=pct+'%';document.getElementById('accountProgress').style.width=pct+'%'}
 function showAccount() {
   hidePanels();
