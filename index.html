@@ -1025,7 +1025,9 @@ const sentences = [
 function renderSentences(){const box=document.getElementById('sentenceList');if(!box)return;const q=(document.getElementById('sentenceSearch').value||'').trim().toLowerCase();const filtered=sentences.filter(x=>x[0].toLowerCase().includes(q)||x[1].includes(q));box.innerHTML='';filtered.forEach((x,i)=>{const card=document.createElement('article');card.className='sentence-item';const en=document.createElement('div');en.className='en';en.textContent=(sentences.indexOf(x)+1)+'. '+x[0];const ar=document.createElement('div');ar.className='ar';ar.textContent=x[1];const b=document.createElement('button');b.className='ghost small';b.textContent='🔊 استمع';b.onclick=()=>speakEnglish(x[0]);card.append(en,ar,b);box.appendChild(card)});if(!filtered.length)box.textContent='لا توجد جمل مطابقة.'}
 
 async function requestSubscription(plan) {
-  const n = document.getElementById('subscriptionNotice');
+  const n =
+    document.getElementById('paidLevelNotice') ||
+    document.getElementById('subscriptionNotice');
 
   const levels = {
   A1: { label: 'A1', amount: 300 },
