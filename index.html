@@ -532,6 +532,42 @@
     padding: 18px;
   }
 }
+ 
+/* Display the paid level as a separate full-screen page */
+.paid-level-page:not(.hidden) {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  width: 100%;
+  max-width: none;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0;
+  padding: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  background: #f5f8fc;
+  border-radius: 0;
+}
+
+.paid-level-page .paid-level-hero,
+.paid-level-page .paid-level-welcome,
+.paid-level-page .paid-level-navigation,
+.paid-level-page .paid-level-section-heading,
+.paid-level-page .paid-level-info-section,
+.paid-level-page #paidLessonsList,
+.paid-level-page #paidLevelExam {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .paid-level-page:not(.hidden) {
+    padding: 12px;
+  }
+}
+
 
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
