@@ -568,6 +568,146 @@
   }
 }
 
+ 
+/* Professional subscription card */
+#paidLevelSubscription:empty {
+  display: none;
+}
+
+.paid-subscription-card {
+  position: relative;
+  overflow: hidden;
+  margin: 22px 0 30px;
+  padding: 28px;
+  color: #183653;
+  background: linear-gradient(145deg, #ffffff 0%, #f1f7ff 100%);
+  border: 1px solid #d7e6f6;
+  border-radius: 24px;
+  box-shadow: 0 14px 38px rgba(16, 43, 80, 0.10);
+}
+
+.paid-subscription-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #102b50, #2878c7, #80c6ff);
+}
+
+.paid-subscription-card h3 {
+  margin: 8px 0 10px;
+  color: #102b50;
+  font-size: clamp(23px, 4vw, 30px);
+  font-weight: 800;
+}
+
+.paid-subscription-card > p {
+  max-width: 650px;
+  color: #60758c;
+  line-height: 1.9;
+}
+
+.paid-subscription-price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 22px 0;
+  padding: 18px 20px;
+  background: #102b50;
+  border-radius: 18px;
+  color: #ffffff;
+}
+
+.paid-subscription-amount {
+  font-size: clamp(34px, 6vw, 46px);
+  line-height: 1.2;
+  font-weight: 850;
+  letter-spacing: -1px;
+}
+
+.paid-subscription-currency {
+  color: #d7eaff;
+  font-size: 15px;
+}
+
+.paid-subscription-features {
+  display: grid;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 22px 0;
+}
+
+.paid-subscription-features li {
+  position: relative;
+  padding: 12px 42px 12px 14px;
+  color: #284b6e;
+  background: #ffffff;
+  border: 1px solid #e0ebf7;
+  border-radius: 13px;
+  line-height: 1.7;
+}
+
+.paid-subscription-features li::before {
+  content: "✓";
+  position: absolute;
+  right: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: #ffffff;
+  background: #2878c7;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.paid-subscription-button {
+  min-height: 52px;
+  font-size: 16px;
+  font-weight: 800;
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(40, 120, 199, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.paid-subscription-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(40, 120, 199, 0.25);
+}
+
+.paid-subscription-footnote {
+  margin: 14px 0 0;
+  text-align: center;
+  font-size: 13px;
+  color: #667d94;
+  line-height: 1.8;
+}
+
+@media (max-width: 600px) {
+  .paid-subscription-card {
+    padding: 21px 17px;
+    border-radius: 20px;
+  }
+
+  .paid-subscription-price {
+    padding: 16px;
+  }
+
+  .paid-subscription-features li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+
 
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
