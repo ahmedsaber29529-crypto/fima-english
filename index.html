@@ -224,6 +224,315 @@
     padding: 24px 22px;
   }
   } 
+ 
+/* FIMA English - Paid Level Page */
+.paid-level-page {
+  color: #183653;
+  direction: rtl;
+  padding: 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.paid-level-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #102b50, #174d83 65%, #2878c7);
+  color: #ffffff;
+  border-radius: 24px;
+  padding: 24px;
+  min-height: 240px;
+  box-shadow: 0 12px 30px rgba(16, 43, 80, 0.16);
+}
+
+.paid-level-back-button {
+  position: relative;
+  z-index: 2;
+  background: #ffffff;
+  color: #173d66;
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.paid-back-button {
+  position: relative;
+  z-index: 2;
+  border-radius: 12px;
+}
+
+.paid-level-brand {
+  display: block;
+  margin-top: 22px;
+  color: #c7e4ff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.paid-level-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 620px;
+}
+
+.paid-level-eyebrow,
+.paid-level-small-label {
+  display: inline-block;
+  color: #3984c9;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.paid-level-eyebrow {
+  color: #c7e4ff;
+  margin-top: 18px;
+}
+
+.paid-level-hero h2 {
+  color: #ffffff;
+  font-size: clamp(28px, 5vw, 42px);
+  margin: 8px 0 12px;
+}
+
+.paid-level-hero p {
+  color: #e4f1ff;
+  line-height: 1.9;
+  margin: 0;
+  max-width: 520px;
+}
+
+.paid-level-decoration {
+  position: absolute;
+  left: 22px;
+  bottom: -24px;
+  color: rgba(255, 255, 255, 0.10);
+  user-select: none;
+}
+
+.paid-level-big-letter {
+  font-size: 170px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.paid-level-big-number {
+  position: absolute;
+  right: 15px;
+  bottom: 18px;
+  font-size: 30px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.paid-level-welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  background: #f0f7ff;
+  border: 1px solid #dcecff;
+  border-radius: 20px;
+  padding: 22px;
+  margin-top: 20px;
+}
+
+.paid-level-welcome h3,
+.paid-level-info-section h3,
+.paid-level-section-heading h3 {
+  color: #163d66;
+  margin: 4px 0 8px;
+}
+
+.paid-level-welcome p,
+.paid-level-info-section p,
+.paid-level-section-heading p {
+  color: #61758b;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.paid-level-welcome-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: #d9ebff;
+  color: #1c66a7;
+  font-size: 28px;
+}
+
+.paid-level-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0 30px;
+}
+
+.paid-level-navigation a {
+  display: inline-block;
+  text-decoration: none;
+  color: #205987;
+  background: #ffffff;
+  border: 1px solid #d8e6f4;
+  border-radius: 999px;
+  padding: 11px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.paid-level-navigation a:hover {
+  background: #eaf4ff;
+  transform: translateY(-2px);
+}
+
+.paid-level-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 28px 0 16px;
+  scroll-margin-top: 20px;
+}
+
+.paid-level-section-heading h3 {
+  font-size: 22px;
+}
+
+.paid-level-section-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: #e4f1ff;
+  color: #246ba8;
+  font-size: 20px;
+}
+
+.paid-lessons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 16px;
+}
+
+#paidLessonsList .level-card {
+  background: #ffffff;
+  border: 1px solid #dce7f2;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 7px 22px rgba(26, 63, 100, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 0;
+}
+
+#paidLessonsList .level-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(26, 63, 100, 0.11);
+}
+
+#paidLessonsList .level-card h3,
+#paidLessonsList .level-card h4 {
+  color: #173f68;
+  line-height: 1.6;
+}
+
+#paidLessonsList .level-card p {
+  color: #61758b;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+
+#paidLessonsList .level-card a {
+  color: #176db2;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+#paidLessonsList .level-card button {
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+.paid-level-info-section {
+  margin-top: 28px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #dce7f2;
+  border-radius: 20px;
+  box-shadow: 0 7px 22px rgba(26, 63, 100, 0.05);
+  scroll-margin-top: 20px;
+}
+
+#paidLevelExam {
+  margin-top: 14px;
+  scroll-margin-top: 20px;
+}
+
+#paidLevelNotice {
+  margin-top: 16px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .paid-level-page {
+    padding: 10px;
+  }
+
+  .paid-level-hero {
+    padding: 20px;
+    min-height: 225px;
+    border-radius: 20px;
+  }
+
+  .paid-level-big-letter {
+    font-size: 125px;
+  }
+
+  .paid-level-decoration {
+    left: 10px;
+    bottom: -16px;
+  }
+
+  .paid-level-welcome {
+    padding: 17px;
+    border-radius: 17px;
+  }
+
+  .paid-level-welcome-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+  }
+
+  .paid-level-navigation {
+    gap: 8px;
+    margin: 18px 0 24px;
+  }
+
+  .paid-level-navigation a {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .paid-level-section-heading h3 {
+    font-size: 19px;
+  }
+
+  .paid-level-info-section {
+    padding: 18px;
+  }
+}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -332,16 +641,79 @@
   </div>
 </section>
  
-<section class="section hidden" id="paidLevelSection">
-  <div class="row between">
-    <h2 id="paidLevelTitle">دروس المستوى</h2>
-    <button class="secondary" onclick="closePaidLevel()">رجوع للمستويات</button>
+
+<section class="section hidden paid-level-page" id="paidLevelSection">
+
+  <div class="paid-level-hero">
+    <button class="secondary paid-back-button" onclick="closePaidLevel()">
+      ← رجوع للمستويات
+    </button>
+
+    <span class="paid-level-brand">FIMA ENGLISH</span>
+
+    <div class="paid-level-hero-content">
+      <span class="paid-level-eyebrow">YOUR LEARNING JOURNEY</span>
+      <h2 id="paidLevelTitle">المستوى A1</h2>
+      <p id="paidLevelDescription">
+        ابدأ رحلتك في تعلم الإنجليزية خطوة بخطوة.
+      </p>
+    </div>
+
+    <div class="paid-level-decoration" aria-hidden="true">
+      <span class="paid-level-big-letter">A</span>
+      <span class="paid-level-big-number">01</span>
+    </div>
   </div>
-  <p id="paidLevelDescription" class="muted">دروس المستوى والامتحان النهائي.</p>
+
   <div id="paidLevelNotice" class="notice hidden"></div>
-  <div id="paidLessonsList" class="lesson-grid"></div>
+
+  <div class="paid-level-welcome">
+    <div>
+      <span class="paid-level-small-label">LET'S LEARN</span>
+      <h3>جاهز تكمّل رحلتك؟</h3>
+      <p>اتعلّم، طبّق، وارجع راجع اللي اتعلمته في أي وقت.</p>
+    </div>
+    <div class="paid-level-welcome-icon">✦</div>
+  </div>
+
+  <div class="paid-level-navigation">
+    <a href="#paidLessonsArea">الدروس والفيديوهات</a>
+    <a href="#paidPracticeArea">التدريبات</a>
+    <a href="#paidExamArea">الاختبار النهائي</a>
+  </div>
+
+  <div class="paid-level-section-heading" id="paidLessonsArea">
+    <div>
+      <span class="paid-level-small-label">LEARN & WATCH</span>
+      <h3>الدروس والفيديوهات</h3>
+      <p>اختار الدرس وابدأ التعلّم.</p>
+    </div>
+    <span class="paid-level-section-icon">▶</span>
+  </div>
+
+  <div id="paidLessonsList" class="lesson-grid paid-lessons-grid"></div>
+
+  <div id="paidPracticeArea" class="paid-level-info-section">
+    <span class="paid-level-small-label">PRACTICE</span>
+    <h3>التدريبات والتطبيق</h3>
+    <p>
+      راجع محتوى الدروس وطبّق اللي اتعلمته عشان تثبّت معلوماتك.
+    </p>
+  </div>
+
+  <div id="paidExamArea" class="paid-level-section-heading">
+    <div>
+      <span class="paid-level-small-label">FINAL EXAM</span>
+      <h3>الاختبار النهائي</h3>
+      <p>اختبر مستواك بعد الانتهاء من الدروس.</p>
+    </div>
+    <span class="paid-level-section-icon">✓</span>
+  </div>
+
   <div id="paidLevelExam" class="hidden"></div>
+
 </section>
+
 
 <section class="section" id="sentences"><div class="row between"><h2>100 جملة للتعارف والحياة اليومية</h2><span class="muted small">مع الترجمة والاستماع</span></div><p class="muted">ابحث في الجمل أو استمع إلى النطق الإنجليزي.</p><input id="sentenceSearch" placeholder="ابحث بالإنجليزية أو العربية..." oninput="renderSentences()" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;margin-bottom:12px"><div class="sentence-list" id="sentenceList"></div></section>
 <section class="section"><div class="card"><h2>رحلتك في التعلم</h2><p class="muted">سجّل الدخول لحفظ تقدمك والوصول إلى صفحة حسابك من أي وقت.</p><button class="primary" onclick="openAuth('signup')">إنشاء حساب جديد</button></div></section>
@@ -710,6 +1082,25 @@ async function openPaidLevel(level) {
     noticeBox.classList.remove('hidden');
   }
    }
+ 
+function closePaidLevel() {
+  const section = document.getElementById('paidLevelSection');
+
+  if (section) {
+    section.classList.add('hidden');
+  }
+
+  const levelsSection = document.getElementById('levels');
+
+  if (levelsSection) {
+    levelsSection.classList.remove('hidden');
+    levelsSection.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+}
+
  async function completePaidLesson(lessonId, level) {
   try {
     const { data, error } = await supabaseClient.rpc(
