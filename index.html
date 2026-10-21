@@ -1108,10 +1108,10 @@ async function requestSubscription(plan) {
     console.error('Subscription request error:', e);
     notice(
       n,
-      'تعذر تسجيل الطلب. لم يتم تأكيد الاشتراك.',
+      'سبب فشل تسجيل الطلب: ' + (e.message || String(e)),
       'error'
     );
-  }
+     }
 }
 
 async function openPaidLevel(level) {
