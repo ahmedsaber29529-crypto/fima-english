@@ -1303,7 +1303,8 @@ async function openPaidLevel(level) {
   } catch (error) {
     console.error('Open paid level error:', error);
     description.textContent = 'تعذر تحميل المستوى.';
-    noticeBox.textContent = 'حصل خطأ أثناء تحميل المستوى. حاول مرة أخرى.';
+    noticeBox.textContent =
+      'سبب الخطأ: ' + (error.message || String(error));
     noticeBox.classList.remove('hidden');
   }
    }
