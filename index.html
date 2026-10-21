@@ -898,7 +898,79 @@
 <section class="section" id="sentences"><div class="row between"><h2>100 جملة للتعارف والحياة اليومية</h2><span class="muted small">مع الترجمة والاستماع</span></div><p class="muted">ابحث في الجمل أو استمع إلى النطق الإنجليزي.</p><input id="sentenceSearch" placeholder="ابحث بالإنجليزية أو العربية..." oninput="renderSentences()" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;margin-bottom:12px"><div class="sentence-list" id="sentenceList"></div></section>
 <section class="section"><div class="card"><h2>رحلتك في التعلم</h2><p class="muted">سجّل الدخول لحفظ تقدمك والوصول إلى صفحة حسابك من أي وقت.</p><button class="primary" onclick="openAuth('signup')">إنشاء حساب جديد</button></div></section>
 </main>
-<section id="accountSection" class="section hidden"><div class="row between"><h2>حسابي</h2><button class="ghost" onclick="hidePanels()">العودة للرئيسيه</button></div><div class="card"><h3 id="accountName">حساب الطالب</h3><p id="accountEmail" class="muted"></p><div class="stats"><div class="stat"><strong id="statDone">0</strong><span class="small">دروس مكتملة</span></div><div class="stat"><strong id="statTotal">6</strong><span class="small">إجمالي الدروس</span></div><div class="stat"><strong id="statPercent">0%</strong><span class="small">التقدم</span></div></div><div style="margin-top:18px"><div class="progressbar"><span id="accountProgress"></span></div></div></div></section>
+<section id="accountSection" class="section hidden">
+  <div class="row between">
+    <div>
+      <p class="muted small">FIMA ENGLISH</p>
+      <h2>حسابي</h2>
+      <p class="muted">تابع مستواك واشتراكك ورحلتك في تعلم الإنجليزية.</p>
+    </div>
+    <button class="ghost" onclick="hidePanels()">العودة للرئيسية</button>
+  </div>
+
+  <div class="card" style="margin-top:18px;padding:24px">
+    <p class="muted small">أهلاً بيك من جديد</p>
+    <h3 id="accountName">حساب الطالب</h3>
+    <p id="accountEmail" class="muted"></p>
+  </div>
+
+  <div class="card" style="margin-top:18px;padding:22px">
+    <h3>اشتراكي التعليمي</h3>
+    <p class="muted">تفاصيل المستوى وحالة الاشتراك الحالي.</p>
+
+    <div class="stats" style="margin-top:18px">
+      <div class="stat">
+        <strong id="accountLevel">—</strong>
+        <span class="small">المستوى</span>
+      </div>
+      <div class="stat">
+        <strong id="accountSubscriptionStatus">—</strong>
+        <span class="small">حالة الاشتراك</span>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;padding:14px;background:var(--soft-bg,#f1f5f9);border-radius:12px">
+      <p>تاريخ بداية الاشتراك: <span id="accountStartDate">—</span></p>
+      <p>تاريخ انتهاء الاشتراك: <span id="accountEndDate">—</span></p>
+    </div>
+
+    <p id="accountSubscriptionMessage" class="muted" style="margin-top:14px">
+      جاري تجهيز بيانات الاشتراك.
+    </p>
+  </div>
+
+  <div class="card" style="margin-top:18px;padding:22px">
+    <h3>تقدمي في التعلم</h3>
+    <p class="muted">تابع إنجازك في الدروس التعليمية.</p>
+
+    <div class="stats" style="margin-top:18px">
+      <div class="stat">
+        <strong id="statDone">0</strong>
+        <span class="small">دروس مكتملة</span>
+      </div>
+      <div class="stat">
+        <strong id="statTotal">6</strong>
+        <span class="small">إجمالي الدروس</span>
+      </div>
+      <div class="stat">
+        <strong id="statPercent">0%</strong>
+        <span class="small">التقدم</span>
+      </div>
+    </div>
+
+    <div style="margin-top:18px">
+      <div class="progressbar">
+        <span id="accountProgress"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;padding:22px">
+    <h3>كمّل رحلتك</h3>
+    <p class="muted">ارجع للدروس وتابع رحلتك في تعلم الإنجليزية.</p>
+    <button class="primary" onclick="hidePanels()">العودة للمنصة</button>
+  </div>
+</section>
 <section id="adminSection" class="section hidden"><div class="row between"><h2>لوحة المدير</h2><button class="ghost" onclick="hidePanels()">العودة للرئيسيه</button></div><div class="card"><p class="muted">إدارة حسابات الطلاب المسجلة في المنصة.</p><div class="row"><input id="studentSearch" placeholder="ابحث بالبريد أو الاسم" style="flex:1;min-width:180px;padding:11px;border:1px solid #cbd5e1;border-radius:10px"><button class="primary" onclick="loadStudents()">بحث / تحديث</button></div><div id="adminNotice" class="notice hidden"></div><div class="tablewrap" style="margin-top:14px"><table><thead><tr><th>الاسم</th><th>البريد الإلكتروني</th><th>تاريخ التسجيل</th></tr></thead><tbody id="studentsBody"><tr><td colspan="3">اضغط تحديث لعرض الطلاب.</td></tr></tbody></table></div><p class="small muted">تعرض اللوحة بيانات الملفات الشخصية التي تسمح بها سياسات قاعدة البيانات، ولا تعرض كلمات المرور.</p><div class="card" style="margin-top:20px">
   <h3>طلبات الاشتراك</h3>
   <p class="muted">مراجعة طلبات اشتراك المستويات التعليمية A1 وA2 وB1 وB2 وC1، وتفعيل المستوى بعد التحقق من الدفع.</p>
