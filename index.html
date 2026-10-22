@@ -2022,13 +2022,21 @@ function showAccount() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function hidePanels() {
-  ['accountSection', 'adminSection'].forEach(id => {
-    document.getElementById(id).classList.add('hidden');
+ function hidePanels() {
+  [
+    'accountSection',
+    'adminSection',
+    'paidLevelSection',
+    'paidLearningPage'
+  ].forEach(id => {
+    const panel = document.getElementById(id);
+    if (panel) {
+      panel.classList.add('hidden');
+    }
   });
 
   document.getElementById('home').classList.remove('hidden');
-}
+ }
 
 async function checkAdmin() {
   const btn = document.getElementById('adminBtn');
