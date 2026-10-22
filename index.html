@@ -1800,6 +1800,22 @@ async function openPaidLevel(level) {
 
     description.textContent = 'دروس المستوى ' + level;
 
+       const learningPage = document.getElementById('paidLearningPage');
+    const learningTitle = document.getElementById('learningPageTitle');
+    const learningDescription = document.getElementById('learningPageDescription');
+    const learningList = document.getElementById('learningLessonsList');
+    const learningNotice = document.getElementById('learningPageNotice');
+
+    learningTitle.textContent = 'المستوى ' + level;
+    learningDescription.textContent = 'دروسك وفيديوهاتك وتدريباتك في مكان واحد.';
+    learningList.innerHTML = '';
+    learningNotice.classList.add('hidden');
+
+    document.getElementById('home').classList.add('hidden');
+    section.classList.add('hidden');
+    learningPage.classList.remove('hidden');
+    learningPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
     lessonsData.forEach((lesson) => {
       const card = document.createElement('article');
       card.className = 'level-card';
@@ -1835,7 +1851,7 @@ async function openPaidLevel(level) {
       completeButton.onclick = () => completePaidLesson(lesson.id, level);
       card.appendChild(completeButton);
 
-      list.appendChild(card);
+      learningList.appendChild(card);
     });
 
   } catch (error) {
@@ -2259,6 +2275,32 @@ async function reviewSubscriptionRequest(requestId, decision) {
   alert(data || 'تمت مراجعة الطلب.');
   await loadSubscriptionRequests();
 }
+function closePaidLearningPage() {
+  const learningPage = document.getElementById('paidLearningPage');
 
+  if (learningPage) {
+    learningPage.classList.add('hidden');
+  }
+
+  const home = document.getElementById('home');
+
+  if (home) {
+    home.classList.remove('hidden');
+  }
+
+  const levelsSection = document.getElementById('levels');
+
+  if (levelsSection) {
+    levelsSection.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  } else if (home) {
+    home.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+}
 </script>
 </body></html>
