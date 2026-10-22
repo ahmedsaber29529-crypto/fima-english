@@ -1794,8 +1794,7 @@ async function openPaidLevel(level) {
     if (lessonsError) throw lessonsError;
 
     if (!lessonsData || lessonsData.length === 0) {
-      description.textContent = 'لا توجد دروس منشورة في هذا المستوى حتى الآن.';
-      return;
+  description.textContent = 'لا توجد دروس منشورة في هذا المستوى حتى الآن.';
     }
 
     description.textContent = 'دروس المستوى ' + level;
