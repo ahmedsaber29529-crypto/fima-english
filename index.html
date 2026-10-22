@@ -1272,7 +1272,65 @@
 
 </section>
 
+<section class="section hidden paid-level-page" id="paidLearningPage">
 
+  <div class="paid-level-hero">
+    <button class="secondary paid-back-button" onclick="closePaidLearningPage()">
+      ← رجوع للاشتراك
+    </button>
+
+    <span class="paid-level-brand">FIMA ENGLISH</span>
+
+    <div class="paid-level-hero-content">
+      <span class="paid-level-eyebrow">YOUR LEARNING JOURNEY</span>
+      <h2 id="learningPageTitle">المستوى A1</h2>
+      <p id="learningPageDescription">دروسك وفيديوهاتك وتدريباتك في مكان واحد.</p>
+    </div>
+  </div>
+
+  <div class="paid-level-welcome">
+    <div>
+      <span class="paid-level-small-label">LET'S LEARN</span>
+      <h3>أهلاً بك في صفحة التعلّم</h3>
+      <p>تابع دروسك، وسجّل تقدّمك، واستعد للاختبار النهائي.</p>
+    </div>
+  </div>
+
+  <div class="paid-level-navigation">
+    <a href="#learningLessonsArea">الدروس والفيديوهات</a>
+    <a href="#learningPracticeArea">التدريبات</a>
+    <a href="#learningExamArea">الاختبار النهائي</a>
+  </div>
+
+  <div class="paid-level-section-heading" id="learningLessonsArea">
+    <div>
+      <span class="paid-level-small-label">LEARN & WATCH</span>
+      <h3>الدروس والفيديوهات</h3>
+      <p>اختار الدرس وابدأ التعلّم.</p>
+    </div>
+  </div>
+
+  <div id="learningLessonsList" class="lesson-grid paid-lessons-grid"></div>
+
+  <div id="learningPracticeArea" class="paid-level-info-section">
+    <span class="paid-level-small-label">PRACTICE</span>
+    <h3>التدريبات والتطبيق</h3>
+    <p>راجع محتوى الدروس وطبّق اللي اتعلمته.</p>
+    <div id="learningPracticeContent"></div>
+  </div>
+
+  <div class="paid-level-section-heading" id="learningExamArea">
+    <div>
+      <span class="paid-level-small-label">FINAL EXAM</span>
+      <h3>الاختبار النهائي</h3>
+      <p>اختبر مستواك بعد الانتهاء من الدروس.</p>
+    </div>
+  </div>
+
+  <div id="learningLevelExam"></div>
+  <div id="learningPageNotice" class="notice hidden"></div>
+
+</section>
 <section class="section" id="sentences"><div class="row between"><h2>100 جملة للتعارف والحياة اليومية</h2><span class="muted small">مع الترجمة والاستماع</span></div><p class="muted">ابحث في الجمل أو استمع إلى النطق الإنجليزي.</p><input id="sentenceSearch" placeholder="ابحث بالإنجليزية أو العربية..." oninput="renderSentences()" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;margin-bottom:12px"><div class="sentence-list" id="sentenceList"></div></section>
 <section class="section"><div class="card"><h2>رحلتك في التعلم</h2><p class="muted">سجّل الدخول لحفظ تقدمك والوصول إلى صفحة حسابك من أي وقت.</p><button class="primary" onclick="openAuth('signup')">إنشاء حساب جديد</button></div></section>
 </main>
