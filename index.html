@@ -1851,8 +1851,10 @@ async function openPaidLevel(level) {
       completeButton.onclick = () => completePaidLesson(lesson.id, level);
       card.appendChild(completeButton);
 
-      learningList.appendChild(card);
+            learningList.appendChild(card);
     });
+
+    await loadLearningExam(level);
 
   } catch (error) {
     console.error('Open paid level error:', error);
