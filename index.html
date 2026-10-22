@@ -708,7 +708,75 @@
 }
 
  
+/* FIMA English - Level Page Layout Upgrade */
+.paid-level-page:not(.hidden) {
+  color: #183653;
+  background: #f4f8fd;
+}
 
+.paid-level-page .paid-level-hero {
+  border-radius: 26px;
+  background: linear-gradient(125deg, #102746 0%, #174c80 58%, #3186d1 100%);
+  box-shadow: 0 14px 34px rgba(16, 43, 80, 0.15);
+}
+
+.paid-level-page .paid-level-welcome {
+  background: #ffffff;
+  border: 1px solid #e0eaf5;
+  box-shadow: 0 8px 24px rgba(16, 43, 80, 0.05);
+}
+
+.paid-level-page .paid-level-navigation a {
+  background: #ffffff;
+  border-color: #dce7f3;
+  color: #204f7b;
+}
+
+.paid-level-page .paid-level-navigation a:hover {
+  background: #eaf4ff;
+  border-color: #9fc9f0;
+}
+
+.paid-level-page .paid-level-section-heading {
+  padding: 18px 20px;
+  background: #ffffff;
+  border: 1px solid #e1eaf4;
+  border-radius: 18px;
+}
+
+.paid-level-page #paidLessonsList .level-card {
+  border-color: #e0eaf5;
+  box-shadow: 0 8px 24px rgba(16, 43, 80, 0.06);
+}
+
+.paid-level-page .paid-level-info-section {
+  background: #ffffff;
+  border-color: #e0eaf5;
+  border-radius: 20px;
+}
+
+.paid-level-page .paid-subscription-card {
+  border-color: #d8e6f5;
+  box-shadow: 0 14px 34px rgba(16, 43, 80, 0.09);
+}
+
+.paid-level-page .paid-subscription-price {
+  background: linear-gradient(135deg, #102b50, #205e98);
+}
+
+@media (max-width: 600px) {
+  .paid-level-page:not(.hidden) {
+    padding: 12px;
+  }
+
+  .paid-level-page .paid-level-hero {
+    border-radius: 20px;
+  }
+
+  .paid-level-page .paid-level-section-heading {
+    padding: 15px;
+  }
+ }
 
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
