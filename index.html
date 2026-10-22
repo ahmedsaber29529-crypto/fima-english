@@ -2302,5 +2302,187 @@ function closePaidLearningPage() {
     });
   }
 }
+ 
+async function loadLearningExam(level) {
+  const examContainer = document.getElementById('learningLevelExam');
+  const notice = document.getElementById('learningPageNotice');
+
+  if (!examContainer) return;
+
+  examContainer.innerHTML = '<p>جاري تحميل الامتحان...</p>';
+
+  try {
+    const { data: questions, error } = await supabaseClient.rpc(
+      'fima_get_level_exam',
+      { p_level_code: level }
+    );
+
+    if (error) throw error;
+
+    if (!Array.isArray(questions) || questions.length === 0) {
+      examContainer.innerHTML =
+        '<p>لا توجد أسئلة منشورة لهذا المستوى حتى الآن.</p>';
+      return;
+    }
+
+    const { data: userResult, error: userError } =
+      await supabaseClient.auth.getUser();
+
+    if (userError) throw userError;
+
+    const user = userResult.user;
+    let isAdmin = false;
+
+    if (user) {
+      const { data: adminRow, error: adminError } =
+        await supabaseClient
+          .from('admin_users')
+          .select('user_id')
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+      if (adminError) throw adminError;
+      isAdmin = !!adminRow;
+    }
+
+    examContainer.innerHTML = '';
+
+    const heading = document.createElement('h3');
+    heading.textContent = 'امتحان المستوى ' + level;
+    examContainer.appendChild(heading);
+
+    if (isAdmin) {
+      const adminNote = document.createElement('p');
+      adminNote.textContent =
+        'أنت في وضع المدير؛ يمكنك معاينة الأسئلة، لكن لا يمكنك تقديم الامتحان.';
+      examContainer.appendChild(adminNote);
+    }
+
+    const form = document.createElement('form');
+    form.id = 'learningExamForm';
+
+    questions.forEach((question, index) => {
+      const card = document.createElement('fieldset');
+      card.className = 'level-card';
+      card.style.marginBottom = '16px';
+
+      const legend = document.createElement('legend');
+      legend.textContent =
+        (index + 1) + '. ' + question.question_text;
+      card.appendChild(legend);
+
+      const options = [
+        ['A', question.option_a],
+        ['B', question.option_b],
+        ['C', question.option_c],
+        ['D', question.option_d]
+      ];
+
+      options.forEach(([letter, optionText]) => {
+        const label = document.createElement('label');
+        label.style.display = 'block';
+        label.style.margin = '10px 0';
+
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = question.question_id;
+        radio.value = letter;
+        radio.required = true;
+
+        label.appendChild(radio);
+        label.appendChild(
+          document.createTextNode(' ' + letter + ') ' + (optionText || ''))
+        );
+
+        card.appendChild(label);
+      });
+
+      form.appendChild(card);
+    });
+
+    if (!isAdmin) {
+      const submitButton = document.createElement('button');
+      submitButton.type = 'submit';
+      submitButton.className = 'primary full';
+      submitButton.textContent = 'تسليم الامتحان وعرض النتيجة';
+      form.appendChild(submitButton);
+
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const answers = questions.map((question) => {
+          const selected = form.querySelector(
+            'input[name="' + question.question_id + '"]:checked'
+          );
+
+          return {
+            question_id: question.question_id,
+            answer: selected ? selected.value : ''
+          };
+        });
+
+        if (answers.some((answer) => !answer.answer)) {
+          alert('جاوب عن كل الأسئلة قبل التسليم.');
+          return;
+        }
+
+        submitButton.disabled = true;
+        submitButton.textContent = 'جاري تصحيح الإجابات...';
+
+        try {
+          const { data: result, error: submitError } =
+            await supabaseClient.rpc('fima_submit_level_exam', {
+              p_level_code: level,
+              p_answers: answers
+            });
+
+          if (submitError) throw submitError;
+
+          const score = Number(result.score);
+          const passed = result.passed === true;
+
+          examContainer.innerHTML = '';
+
+          const resultTitle = document.createElement('h3');
+          resultTitle.textContent = passed
+            ? 'مبروك! نجحت في المستوى ' + level
+            : 'لم تصل إلى درجة النجاح هذه المرة';
+          examContainer.appendChild(resultTitle);
+
+          const resultDetails = document.createElement('p');
+          resultDetails.textContent =
+            'النتيجة: ' + score + '% — الإجابات الصحيحة: ' +
+            result.correct_answers + ' من ' + result.total_questions +
+            ' — درجة النجاح المطلوبة: ' + result.required_score + '%';
+          examContainer.appendChild(resultDetails);
+
+          if (notice) {
+            notice.textContent = passed
+              ? 'تم اجتياز الامتحان بنجاح.'
+              : 'يمكنك مراجعة الدروس والاستعداد للمحاولة القادمة.';
+            notice.classList.remove('hidden');
+          }
+        } catch (submitError) {
+          console.error(submitError);
+          alert('تعذر تصحيح الامتحان: ' + submitError.message);
+          submitButton.disabled = false;
+          submitButton.textContent = 'تسليم الامتحان وعرض النتيجة';
+        }
+      });
+    }
+
+    examContainer.appendChild(form);
+  } catch (error) {
+    console.error(error);
+    examContainer.innerHTML =
+      '<p>تعذر تحميل الامتحان. حاول مرة أخرى بعد التأكد من الاشتراك والصلاحيات.</p>';
+
+    if (notice) {
+      notice.textContent = error.message;
+      notice.classList.remove('hidden');
+    }
+  }
+}
+
 </script>
 </body></html>
