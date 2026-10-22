@@ -1815,7 +1815,7 @@ async function openPaidLevel(level) {
     learningPage.classList.remove('hidden');
     learningPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    lessonsData.forEach((lesson) => {
+    (lessonsData || []).forEach((lesson) => {
       const card = document.createElement('article');
       card.className = 'level-card';
 
